@@ -14,12 +14,21 @@ const routes: Routes = [
     loadChildren: () => import('./servicios-escolares/servicios-escolares.module').then( m => m.ServiciosEscolaresModule),
   },
   {
+    path: 'profesor-ext',
+    loadChildren: () => import('./profesor-ext/profesor-ext.module').then( m => m.ProfesorExtModule),
+  },
+  {
     path: '404',
     component: Error404PageComponent,
   },
   {
     path: ' ',
     redirectTo: 'servicios-escolares',
+    pathMatch: 'full'
+  },
+  {
+    path: ' ',
+    redirectTo: 'profesor-ext',
     pathMatch: 'full'
   },
   {

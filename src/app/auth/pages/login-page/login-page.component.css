@@ -5,6 +5,7 @@
 .login-container {
     display: flex;
     justify-content: center;
+    background-image: url('/assets/fondo-login.jpeg');
     align-items: center;
     width: 100%;
     height: 100vh; /* Asegura que ocupa toda la pantalla */
