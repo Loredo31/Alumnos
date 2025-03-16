@@ -1,0 +1,56 @@
+/* Tarjeta principal */
+.observaciones-card {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+}
+
+/* Encabezado */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eeeeee;
+}
+
+/* Contenedor de Búsqueda */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Lista de Observaciones */
+.observation-card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px 0;
+  transition: transform 0.2s ease-in-out;
+}
+
+.observation-card:hover {
+  transform: scale(1.02);
+}
+
+/* Mensaje cuando no hay datos */
+.no-data {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: gray;
+  margin-top: 20px;
+}

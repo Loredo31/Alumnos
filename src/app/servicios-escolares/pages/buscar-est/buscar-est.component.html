@@ -1,0 +1,51 @@
+<header class="header">
+  <div class="header-container">
+    <h1 class="header-title">Buscar Estudiantes</h1>
+  </div>
+</header>
+
+<div class="form-container">
+  <!-- Filtros de búsqueda -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="searchTerm">Buscar por Matrícula o Nombre</label>
+      <input id="searchTerm" type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Ingresa matrícula o nombre" />
+    </div>
+
+    <div class="form-group">
+      <button type="button" (click)="onSearch()" class="btn btn-primary search-btn"><mat-icon>search</mat-icon>  Buscar</button>
+    </div>
+  </div>
+
+  <!-- Lista de estudiantes -->
+  <div *ngIf="filteredStudents.length > 0" class="student-list">
+    <div *ngFor="let student of filteredStudents" class="student-item">
+      <div class="student-info">
+        <img src="assets/user-icon.png" alt="User Icon" class="user-icon" />
+        <div class="student-details">
+          <h3>{{ student.firstName }} {{ student.paternalSurname }} {{ student.maternalSurname }}</h3>
+          <p>{{ student.career }}</p>
+        </div>
+      </div>
+      <div class="student-actions">
+        <button (click)="onEdit(student)" class="btn btn-warning">Editar</button>
+        <button (click)="onDelete(student)" class="btn btn-danger">Dar Baja</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje de No Resultados -->
+  <div *ngIf="filteredStudents.length === 0" class="no-results">
+    <p>No se encontraron estudiantes.</p>
+  </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h3>{{ modalMessage }}</h3>
+    <button (click)="onConfirmDelete('temp')" class="btn btn-warning">Dar Baja Temporal</button>
+    <button (click)="onConfirmDelete('permanent')" class="btn btn-danger">Dar Baja Definitiva</button>
+    <button (click)="closeModal()" class="btn btn-secondary">Cancelar</button>
+  </div>
+</div>
