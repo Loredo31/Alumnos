@@ -14,6 +14,7 @@ import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Asegúrate de importarlos
 import { MaterialModule } from '../material/material.module';
+import { ObservacionDialogComponent } from './pages/observaciones/observacion-dialog/observacion-dialog.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MaterialModule } from '../material/material.module';
     HomeComponent,
     StudentListComponent,
     ObservacionesComponent,
-    LayoutPageComponent
+    LayoutPageComponent,
+    ObservacionDialogComponent
   ],
   imports: [
     CommonModule,
