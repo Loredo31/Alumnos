@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AlumnoService {
 
+
   private apiUrl = 'http://localhost:3000/api/alumnos';  // URL de tu API
 
   constructor(private http: HttpClient) { }
@@ -29,3 +30,4 @@ obtenerAlumnos(): Observable<any[]> {
   return this.http.get<any[]>(this.apiUrl);
 }
 }
+
