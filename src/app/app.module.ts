@@ -9,6 +9,14 @@ import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+// ✅ Importaciones necesarias de Angular Material
+import { MatTableModule } from '@angular/material/table'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,7 +27,12 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     MaterialModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule, // ✅ Importado correctamente
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [
     provideAnimationsAsync()

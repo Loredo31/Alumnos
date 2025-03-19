@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// ✅ Importaciones necesarias de Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +19,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
+// ✅ IMPORTAR `MatTableModule`, `MatPaginatorModule`, `MatSortModule`
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   exports: [
@@ -37,11 +41,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
     ReactiveFormsModule,
+    
+    // ✅ Agregar estos módulos para `mat-table`
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class MaterialModule { }

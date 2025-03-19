@@ -1,0 +1,40 @@
+<div class="actualizar-container">
+  <h1>Actualizar Información</h1>
+
+  <!-- Información Personal -->
+  <div>
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" [(ngModel)]="user.telefonos[0]">
+
+    <label for="gmail">Correo Electrónico:</label>
+    <input type="email" id="gmail" [(ngModel)]="user.correos[0]">
+  </div>
+
+  <!-- Información de Domicilio -->
+  <div>
+    <h3>Domicilio</h3>
+    <label for="calle">Calle:</label>
+    <input type="text" id="calle" [(ngModel)]="user.domicilio.calle">
+
+    <label for="numeroInterior">Número Interior:</label>
+    <input type="text" id="numeroInterior" [(ngModel)]="user.domicilio.numero_interior">
+
+    <label for="numeroExterior">Número Exterior:</label>
+    <input type="text" id="numeroExterior" [(ngModel)]="user.domicilio.numero_exterior">
+
+    <label for="colonia">Colonia:</label>
+    <input type="text" id="colonia" [(ngModel)]="user.domicilio.colonia">
+
+    <label for="codigoPostal">Código Postal:</label>
+    <input type="text" id="codigoPostal" [(ngModel)]="user.domicilio.codigo_postal">
+
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" [(ngModel)]="user.domicilio.ciudad">
+  </div>
+
+  <!-- Botones de Confirmación y Cancelación -->
+  <div class="buttons">
+    <button (click)="actualizar()">Confirmar</button>
+    <button (click)="cancelar()">Cancelar</button>
+  </div>
+</div>
