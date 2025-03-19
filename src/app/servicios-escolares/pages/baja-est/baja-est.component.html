@@ -13,23 +13,27 @@
       </div>
   
       <div class="form-group">
-        <button type="button" (click)="onSearch()" class="btn btn-primary search-btn">Buscar</button>
+        <button type="button" (click)="onSearch()" class="btn btn-primary search-btn"><mat-icon>search</mat-icon> Buscar</button>
       </div>
     </div>
   
     <!-- Lista de estudiantes dados de baja temporal -->
     <div *ngIf="filteredStudents.length > 0" class="student-list">
-      <div *ngFor="let student of filteredStudents" class="student-item" [ngClass]="{'inactive': student.role === 5}">
+      <div *ngFor="let student of filteredStudents" class="student-item" [ngClass]="{'inactive': student.rol === 2}">
         <div class="student-info">
-          <img src="assets/user-icon.png" alt="User Icon" class="user-icon" />
+          <img src="https://storage.needpix.com/rsynced_images/user-icon-2098873_1280.png" alt="User Icon" class="user-icon" />
           <div class="student-details">
-            <h3>{{ student.firstName }} {{ student.paternalSurname }} {{ student.maternalSurname }}</h3>
-            <p>{{ student.career }}</p>
+            <h3>{{ student.nombre }} {{ student.apellido_paterno }} {{ student.apellido_materno }}</h3>
+            <p><strong>Matrícula:</strong> {{ student.matricula }}</p>
+            <p><strong>Carrera:</strong> {{ student.carrera?.nombre || 'Sin asignar' }}</p>
           </div>
         </div>
         <div class="student-actions">
-          <button *ngIf="student.role === 5" (click)="onRestore(student)" class="btn btn-success">Restaurar</button>
-          <button *ngIf="student.role === 5" (click)="onDelete(student)" class="btn btn-danger">Baja Definitiva</button>
+          <!-- Botón Restaurar (solo si el rol es 2 - Baja Temporal) -->
+          <button *ngIf="student.rol === 2" (click)="onRestore(student)" class="btn btn-success"><mat-icon>restore</mat-icon> Restaurar</button>
+          
+          <!-- Botón Baja Definitiva (solo si el rol es 2 - Baja Temporal) -->
+          <button *ngIf="student.rol === 2" (click)="onDelete(student)" class="btn btn-danger"><mat-icon>person_off</mat-icon> Baja Definitiva</button>
         </div>
       </div>
     </div>
@@ -37,6 +41,26 @@
     <!-- Mensaje de No Resultados -->
     <div *ngIf="filteredStudents.length === 0" class="no-results">
       <p>No se encontraron estudiantes.</p>
+    </div>
+  </div>
+  
+  <!-- Modal de confirmación -->
+  <div *ngIf="showModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Confirmar Baja Definitiva</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ modalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          <mat-icon>close</mat-icon> Cancelar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onConfirmDelete()">
+          <mat-icon>check_circle</mat-icon> Confirmar
+        </button>
+      </div>
     </div>
   </div>
   

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlumnoService } from '../../../services/alumno.service';
 
 @Component({
   selector: 'app-estudiante-page',
@@ -54,8 +55,12 @@ export class EstudiantePageComponent {
   specialties: string[] = [];
 
   photoPreview: string | ArrayBuffer | null = null;
+  registroExitoso: boolean = false;
 
-  constructor() {}
+  edadInvalida: boolean = false;
+  telefonoInvalido: boolean = false;
+
+  constructor(private alumnoService: AlumnoService) {}
 
   // Generación automática de matrícula
   generateMatricula(): void {
@@ -82,17 +87,40 @@ export class EstudiantePageComponent {
     }
   }
 
-    // Manejo del cambio de área/carrera
-    onCareerChange(event: any): void {
-      const selectedCareer = event.target.value;
-      if (selectedCareer === 'Ingeniería en Sistemas') {
-        this.specialties = ['Redes', 'Desarrollo de Software'];
-      } else if (selectedCareer === 'Ingeniería en Electrónica') {
-        this.specialties = ['Automatización', 'Electrónica Analógica'];
-      } else if (selectedCareer === 'Ingeniería Mecánica') {
-        this.specialties = ['Diseño Mecánico', 'Mantenimiento Industrial'];
-      }
+  // Manejo del cambio de área/carrera
+  onCareerChange(event: any): void {
+    const selectedCareer = event.target.value;
+    if (selectedCareer === 'Ingeniería en Sistemas') {
+      this.specialties = ['Redes', 'Desarrollo de Software'];
+    } else if (selectedCareer === 'Ingeniería en Electrónica') {
+      this.specialties = ['Automatización', 'Electrónica Analógica'];
+    } else if (selectedCareer === 'Ingeniería Mecánica') {
+      this.specialties = ['Diseño Mecánico', 'Mantenimiento Industrial'];
     }
+  }
+
+  // Validación de edad
+  validarEdad(): void {
+    const fechaNacimiento = new Date(this.alumno.fecha_nacimiento);
+    const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
+    const mes = new Date().getMonth() - fechaNacimiento.getMonth();
+
+    if (edad < 15 || (edad === 15 && mes < 0)) {
+      this.edadInvalida = true;
+    } else {
+      this.edadInvalida = false;
+    }
+  }
+
+  // Validación de teléfono (10 dígitos)
+  validarTelefono(): void {
+    const telefono = this.alumno.telefonos[0];
+    if (telefono && telefono.length === 10 && /^[0-9]+$/.test(telefono)) {
+      this.telefonoInvalido = false;
+    } else {
+      this.telefonoInvalido = true;
+    }
+  }
 
   // Manejo de los teléfonos del alumno
   addPhone(): void {
@@ -132,6 +160,73 @@ export class EstudiantePageComponent {
 
   // Registrar alumno
   registrarAlumno(): void {
-    console.log(this.alumno);
+    if (this.edadInvalida || this.telefonoInvalido) {
+      return; // Si la edad o el teléfono son inválidos, no se realiza el registro
+    }
+
+    this.alumnoService.registrarAlumno(this.alumno).subscribe(
+      (response) => {
+        console.log('Alumno registrado con éxito:', response);
+        // Limpiar los datos del formulario
+        this.limpiarFormulario();
+        // Mostrar el mensaje de éxito
+        this.registroExitoso = true;
+        setTimeout(() => {
+          this.registroExitoso = false;  // Ocultar el mensaje de éxito después de 3 segundos
+        }, 3000);
+      },
+      (error) => {
+        console.error('Error al registrar alumno:', error);
+        // Aquí puedes manejar el error si la solicitud no se realiza correctamente
+      }
+    );
+  }
+
+  // Limpiar el formulario
+  limpiarFormulario(): void {
+    this.alumno = {
+      matricula: '',
+      foto: '',
+      apellido_paterno: '',
+      apellido_materno: '',
+      nombre: '',
+      fecha_nacimiento: '',
+      sexo: '',
+      telefonos: [''],
+      correos: [''],
+      promedio_bachillerato: null,
+      especialidad_bachillerato: '',
+      rfc: '',
+      contrasenia: '',
+      domicilio: {
+        calle: '',
+        numero_interior: '',
+        numero_exterior: '',
+        colonia: '',
+        codigo_postal: '',
+        ciudad: ''
+      },
+      tutores: [{
+        nombre: '',
+        apellido_paterno: '',
+        apellido_materno: '',
+        telefonos: [''],
+        correos: [''],
+        domicilio: {
+          calle: '',
+          numero_exterior: '',
+          colonia: '',
+          ciudad: '',
+          codigo_postal: ''
+        }
+      }],
+      carrera: {
+        nombre: '',
+        especialidad: ''
+      },
+      certificado_bachillerato: 0,
+      photo: ''
+    };
+    this.photoPreview = null; // Limpiar la vista previa de la foto
   }
 }

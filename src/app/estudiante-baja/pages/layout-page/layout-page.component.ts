@@ -10,8 +10,7 @@ import { Component } from '@angular/core';
 export class LayoutPageComponent {
 
   public sidebarItems = [
-    {label:'Pantalla de inicio',icon:'label',url:'./home'},
-    {label:'Buscar estudiante',icon:'search',url:'./buscar-estudiantes'},
-    {label:'Cerrar sesión', icon:'add', url:'./'}
+    {label:'Pantalla de inicio',icon:'home',url:'./home'},
+    {label:'Cerrar sesión', icon:'exit_to_app', url:'./'}
   ]
 }
