@@ -194,7 +194,7 @@ button[type="submit"]:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('https://img.freepik.com/fotos-premium/fondo-gris-gradiente_997534-16483.jpg');
+  background-image: url('https://i.pinimg.com/736x/f9/d5/df/f9d5df3917e17709e25d562bc5ff5759.jpg');
   background-size: cover;
   background-position: center;
   z-index: -1;  /* Esto asegura que la imagen quede detrás del contenido */
@@ -210,5 +210,6 @@ button[type="submit"]:hover {
   border: 1px solid #c3e6cb;
   border-radius: 5px;
 }
+
 
 

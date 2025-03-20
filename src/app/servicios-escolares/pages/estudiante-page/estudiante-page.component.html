@@ -1,3 +1,5 @@
+<div class="background-image"></div>
+
 <header class="header">
   <div class="header-container">
     <h1 class="header-title">Registro</h1>
@@ -9,11 +11,11 @@
 <form (ngSubmit)="registrarAlumno()" class="form-container">
 
   <!-- Matrícula y Foto -->
-  <div class="form-row">
+ <!-- <div class="form-row">
     <div class="form-group">
       <label for="matricula">Matrícula:</label>
       <input [(ngModel)]="alumno.matricula" name="matricula" class="form-control" required readonly>
-    </div>
+    </div>-->
 
     <!-- Foto -->
     <div class="form-group photo-input-container">
@@ -23,7 +25,6 @@
         <img [src]="photoPreview" alt="Vista previa" class="photo-preview">
       </div>
     </div>
-  </div>
 
   <!-- Nombre y Apellidos -->
   <div class="form-row">

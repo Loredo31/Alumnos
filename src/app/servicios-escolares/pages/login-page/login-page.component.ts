@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+
 
 @Component({
   selector: 'app-login-page',
@@ -34,37 +35,39 @@ export class LoginPageComponent {
         // Si el login es exitoso, guarda el token
         this.authService.saveToken(response.token);
         
+        console.log(response.token);
+
         // Verificar el rol del usuario y redirigir a la ruta correspondiente
         switch (response.alumno.rol) {
           case 1:
-            // Rol 1 (Admin): redirigir al panel de administración
-            this.router.navigate(['/auth']);  // Ruta para Admin
+            // Rol 1 (alumno): redirigir al panel de alumno
+            this.router.navigate(['/estudiantes/home']);  // Ruta para Admin
             break;
           case 2:
-            // Rol 2 (Empleado): redirigir al panel de empleados
+            // Rol 2 (Empleado): redirigir al panel de alumnos dados de baja
             this.router.navigate(['/estudiante-baja/home']);  // Ruta para Empleado
             break;
           case 3:
-            // Rol 3 (Otro rol): redirigir a una ruta específica
-            this.router.navigate(['/']);  // Ruta para otro rol
+            // Rol 3 (Otro rol): redirigir a panel de profesor de clase
+            this.router.navigate(['/profesor-clase/home']);  // Ruta para otro rol
             break;
             case 4:
-              // Rol 3 (Otro rol): redirigir a una ruta específica
+              // Rol 4 (Otro rol): redirigir a panel de profesor extracurricular
               this.router.navigate(['/profesor-ext/home']);  // Ruta para otro rol
               break;
               case 5:
-                // Rol 3 (Otro rol): redirigir a una ruta específica
-                this.router.navigate(['/servicios-escolares']);  // Ruta para otro rol
+                // Rol 5 (Otro rol): redirigir a panel de servicios escolares
+                this.router.navigate(['/servicios-escolares/home']);  // Ruta para otro rol
                 break;  
           default:
-            // Si el rol no es reconocido, redirige a la página principal o muestra un mensaje de error
+            // Si el rol no es reconocido, muestra un mensaje de error
             this.router.navigate(['/404']);
             break;
         }
       },
       error: (err) => {
         // Manejo de errores
-        this.errorMessage = 'matricula o contraseña incorrectos.';
+        this.errorMessage = 'Matricula o contraseña incorrectos.';
       }
     });
   }

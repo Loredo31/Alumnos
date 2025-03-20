@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -13,16 +13,12 @@ export class LayoutPageComponent {
     {label:'Perfil',icon:'account_circle',url:'./perfil'},
     {label:'Actualizar',icon:'autorenew',url:'./actualizar'},
     {label:'Consultar',icon:'search',url:'./consultas'},
-    {label:'Cerrar Sesion',icon:'exit_to_app',url:'./cerrar', action: 'logout'},
-    
-    
+    {label:'Cerrar sesión', icon:'exit_to_app', url:'', action: () => this.logout()}
   ];
-  constructor(private router: Router, private authService: AuthService) {}
 
-  // Método logout
-  logout() {
-    this.authService.logout();  // Llama al método de logout del servicio
-    this.router.navigate(['/home']);  // Redirige a la página de login
+  constructor(private authService: AuthService) {}
+
+  logout():void{
+    this.authService.logout
   }
 }
-

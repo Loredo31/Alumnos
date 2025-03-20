@@ -51,7 +51,7 @@ export class EstudiantePageComponent {
     photo: ''
   };
 
-  areas: string[] = ['Ingeniería en Sistemas', 'Ingeniería en Electrónica', 'Ingeniería Mecánica'];
+  areas: string[] = ['Área Económico Administrativo', 'Área Industrial, Eléctrica y Electrónica', 'Área en Tecnologías de la Información'];
   specialties: string[] = [];
 
   photoPreview: string | ArrayBuffer | null = null;
@@ -90,12 +90,18 @@ export class EstudiantePageComponent {
   // Manejo del cambio de área/carrera
   onCareerChange(event: any): void {
     const selectedCareer = event.target.value;
-    if (selectedCareer === 'Ingeniería en Sistemas') {
-      this.specialties = ['Redes', 'Desarrollo de Software'];
-    } else if (selectedCareer === 'Ingeniería en Electrónica') {
-      this.specialties = ['Automatización', 'Electrónica Analógica'];
-    } else if (selectedCareer === 'Ingeniería Mecánica') {
-      this.specialties = ['Diseño Mecánico', 'Mantenimiento Industrial'];
+    if (selectedCareer === 'Área Económico Administrativo') {
+      this.specialties = ['Licenciatura en Administración', 'TSU en Gestión de Capital Humano', 'Licenciatura en Contaduría',
+        'TSU en Contaduría', 'Licenciatura en Negocios y Mercadotecnia', 'TSU en Mercadotecnia', 
+        'Licenciatura en Gestión y Desarrollo Turístico', 'TSU en Turismo'];
+    } else if (selectedCareer === 'Área Industrial, Eléctrica y Electrónica') {
+      this.specialties = ['Licenciatura en Ingeniería en Mecatrónica', 'TSU en Instalaciones Eléctricas', 'Licenciatura en Ingeniería en Mecatrónica',
+        'TSU en Automatización', 'Licenciatura en Ingeniería Industrial', 'TSU en Procesos Productivos', 
+        'Licenciatura en Ingeniería en Energía y Desarrollo Sostenible', 'TSU en Energía Turbo Solar'];
+    } else if (selectedCareer === 'Área en Tecnologías de la Información') {
+      this.specialties = ['Licenciatura en Diseño Digital y Producción Audiovisual', 'TSU en Diseño y Animación Digital', 'Licenciatura en Ingeniería en Tecnologías de la Información y Innovación',
+        'TSU en Desarrollo de Software Multiplataforma', 'Licenciatura en Ingeniería en Tecnologías de la Información y Innovación', 'TSU en Infraestructura de Redes Digitales',
+        'Licenciatura en Ingeniería en Tecnologías de la Información y Innovación', 'TSU en Entornos Virtuales y Negocios Digitales'];
     }
   }
 
