@@ -9,7 +9,6 @@
     <button mat-raised-button color="primary" (click)="openDialog()">➕ Nueva Observación</button>
 
     <div *ngIf="filteredObservations.length > 0; else noData">
-      <!-- Contenedor de la tabla -->
       <div class="table-container">
         <table>
           <thead>
@@ -26,8 +25,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let observation of filteredObservations">
-              <td>{{ observation.teacherName }}</td> <!-- Nombre del Profesor -->
-              <td>{{ observation.teacherId }}</td>   <!-- ID del Profesor -->
+              <td>{{ observation.teacherName }}</td>
+              <td>{{ observation.teacherId }}</td>
               <td>{{ observation.subject }}</td>
               <td>{{ observation.semester }}</td>
               <td>{{ observation.year }}</td>
@@ -40,7 +39,6 @@
       </div>
     </div>
 
-    <!-- Mensaje cuando no hay datos -->
     <ng-template #noData>
       <p class="no-data">❌ No tienes observaciones registradas.</p>
     </ng-template>

@@ -1,34 +1,49 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+// Definimos tipos claros para las propiedades teachers y students
+interface Teacher {
+  id: string;
+  name: string;
+}
+
+interface Student {
+  id: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-observacion-dialog',
   templateUrl: './observacion-dialog.component.html',
   styleUrls: ['./observacion-dialog.component.css']
 })
 export class ObservacionDialogComponent {
+  // Inicializamos las propiedades con los tipos correspondientes
   newObservation = {
     studentName: '',
     subject: '',
     semester: 1,
     year: new Date().getFullYear(),
     description: '',
-    teacherId: '', // Asegúrate de que este ID sea el correcto para el profesor
-    teacherName: ''  // Asegúrate de asignar un nombre para el profesor
+    teacherId: '',  // ID del profesor
+    teacherName: ''  // Nombre del profesor
   };
 
-  teachers: { id: string, name: string }[] = [];
-  semesters: number[] = [];
-  specialties: string[] = [];
+  students: Student[] = [];  // Lista de estudiantes
+  subjects: string[] = [];   // Lista de asignaturas
+  semesters: number[] = [];  // Lista de semestres
+  teachers: Teacher[] = [];  // Lista de profesores
 
   constructor(
     public dialogRef: MatDialogRef<ObservacionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any // Recibimos los datos desde el componente principal
   ) {
+    // Inicializamos las propiedades con los datos proporcionados
     if (data) {
-      this.teachers = data.teachers;
-      this.semesters = data.semesters;
-      this.specialties = data.specialties;
+      this.students = data.students || [];
+      this.subjects = data.subjects || [];
+      this.semesters = data.semesters || [];
+      this.teachers = data.teachers || []; // Asignamos la lista de profesores
     }
   }
 
@@ -37,6 +52,7 @@ export class ObservacionDialogComponent {
   }
 
   save(): void {
-    this.dialogRef.close(this.newObservation); // Ahora el teacherId es parte de los datos enviados
+    // Guardamos la observación con los datos actuales
+    this.dialogRef.close(this.newObservation); // Enviamos la nueva observación con los valores seleccionados
   }
 }
