@@ -312,3 +312,14 @@ button {
     margin-right: 5px;
   }
   
+  .background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/736x/f9/d5/df/f9d5df3917e17709e25d562bc5ff5759.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;  /* Esto asegura que la imagen quede detrás del contenido */
+  }

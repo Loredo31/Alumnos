@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+
 
 @Component({
   selector: 'app-login-page',
@@ -40,7 +41,7 @@ export class LoginPageComponent {
         switch (response.alumno.rol) {
           case 1:
             // Rol 1 (alumno): redirigir al panel de alumno
-            this.router.navigate(['/auth']);  // Ruta para Admin
+            this.router.navigate(['/estudiantes/home']);  // Ruta para Admin
             break;
           case 2:
             // Rol 2 (Empleado): redirigir al panel de alumnos dados de baja
@@ -48,14 +49,14 @@ export class LoginPageComponent {
             break;
           case 3:
             // Rol 3 (Otro rol): redirigir a panel de profesor de clase
-            this.router.navigate(['/']);  // Ruta para otro rol
+            this.router.navigate(['/profesor-clase/home']);  // Ruta para otro rol
             break;
             case 4:
-              // Rol 3 (Otro rol): redirigir a panel de profesor extracurricular
+              // Rol 4 (Otro rol): redirigir a panel de profesor extracurricular
               this.router.navigate(['/profesor-ext/home']);  // Ruta para otro rol
               break;
               case 5:
-                // Rol 3 (Otro rol): redirigir a panel de servicios escolares
+                // Rol 5 (Otro rol): redirigir a panel de servicios escolares
                 this.router.navigate(['/servicios-escolares/home']);  // Ruta para otro rol
                 break;  
           default:

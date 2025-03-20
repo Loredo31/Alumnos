@@ -1,0 +1,69 @@
+/* Estilo para la imagen de fondo */
+.background-image {
+  position: fixed; /* Fijar la imagen en el fondo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://smowl.net/wp-content/uploads/2023/08/que-es-el-aprendizaje-por-descubrimiento.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  z-index: -1; /* Mantener la imagen detrás de los contenidos */
+}
+
+/* Estilo para el contenedor del perfil */
+.perfil-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para contraste */
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para la tarjeta */
+.perfil-card {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la tarjeta */
+.mat-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3f51b5;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los elementos del perfil */
+.profile-info {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+/* Estilo para los elementos individuales */
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.label {
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+/* Ajustes de la foto de perfil */
+.profile-item img {
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}

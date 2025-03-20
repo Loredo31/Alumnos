@@ -18,9 +18,14 @@ export class EstudiantesComponent implements OnInit {
   fecha_inicio_actividad: Date | null = null;  // La fecha de inicio de la actividad
   fecha_fin_actividad: Date | null = null;  // La fecha de fin de la actividad
   actividadesDisponibles: any[] = [  // Lista de actividades disponibles (esto puede venir del backend)
-    { nombre: 'Actividad 1' },
-    { nombre: 'Actividad 2' },
-    { nombre: 'Actividad 3' }
+    { nombre: 'Fútbol' },
+    { nombre: 'Básquetbol' },
+    { nombre: 'Teatro' },
+    { nombre: 'Música' },
+    { nombre: 'Voleibol' },
+    { nombre: 'Ajedrez' },
+    { nombre: 'Danza' },
+    { nombre: 'Zumba' }
   ];
 
   constructor(private profesorExtService: ProfesorExtService) { }

@@ -9,6 +9,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from './services/auth.service';
+
+
 
 @NgModule({
   declarations: [
@@ -21,10 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     RouterModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    
   ],
   providers: [
     provideAnimationsAsync()
+    
   ],
   bootstrap: [AppComponent]
 })

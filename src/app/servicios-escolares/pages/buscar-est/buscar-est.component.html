@@ -1,3 +1,5 @@
+<div class="background-image"></div>
+
 <header class="header">
   <div class="header-container">
     <h1 class="header-title">Buscar Estudiantes</h1>
@@ -59,11 +61,11 @@
 
 
 <!-- Modal de edición de estudiante a pantalla completa -->
-<div *ngIf="studentToEdit" class="full-screen-modal">
+<div *ngIf="studentToEdit" class="modal-overlayy">
   <div class="modal-content">
     <form (ngSubmit)="onSave(studentToEdit)">
       <!-- Nombre y Apellidos -->
-      <div class="form-row">
+      
         <div class="form-group">
           <label for="nombre">Nombre:</label>
           <input [(ngModel)]="studentToEdit.nombre" name="nombre" class="form-control" required>
@@ -78,33 +80,10 @@
           <label for="apellido_materno">Apellido Materno:</label>
           <input [(ngModel)]="studentToEdit.apellido_materno" name="apellido_materno" class="form-control">
         </div>
-      </div>
-
-      <!-- Teléfonos y Correos del Alumno -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="telefonos">Teléfonos:</label>
-          <div *ngFor="let phone of studentToEdit.telefonos; let i = index" class="phone-group">
-            <input [(ngModel)]="studentToEdit.telefonos[i]" name="telefonos{{i}}" class="form-control">
-            <button *ngIf="studentToEdit.telefonos.length > 1" type="button" (click)="removePhone(studentToEdit, i)" class="remove-btn">Eliminar</button>
-          </div>
-          <button type="button" (click)="addPhone(studentToEdit)" class="add-btn" [disabled]="studentToEdit.telefonos.length >= 3">Agregar Teléfono</button>
-        </div>
-
-        <div class="form-group">
-          <label for="correos">Correos:</label>
-          <div *ngFor="let email of studentToEdit.correos; let i = index" class="email-group">
-            <input [(ngModel)]="studentToEdit.correos[i]" name="correos{{i}}" class="form-control">
-            <button *ngIf="studentToEdit.correos.length > 1" type="button" (click)="removeEmail(studentToEdit, i)" class="remove-btn">Eliminar</button>
-          </div>
-          <button type="button" (click)="addEmail(studentToEdit)" class="add-btn" [disabled]="studentToEdit.correos.length >= 3">Agregar Correo</button>
-        </div>
-      </div>
 
       <!-- Domicilio -->
       <fieldset>
         <legend>Domicilio</legend>
-        <div class="form-row">
           <div class="form-group">
             <label for="calle">Calle:</label>
             <input [(ngModel)]="studentToEdit.domicilio.calle" name="calle" class="form-control" required>
@@ -117,9 +96,7 @@
             <label for="numero_exterior">Número Exterior:</label>
             <input [(ngModel)]="studentToEdit.domicilio.numero_exterior" name="numero_exterior" class="form-control" required>
           </div>
-        </div>
 
-        <div class="form-row">
           <div class="form-group">
             <label for="colonia">Colonia:</label>
             <input [(ngModel)]="studentToEdit.domicilio.colonia" name="colonia" class="form-control" required>
@@ -134,13 +111,12 @@
             <label for="ciudad">Ciudad:</label>
             <input [(ngModel)]="studentToEdit.domicilio.ciudad" name="ciudad" class="form-control" required>
           </div>
-        </div>
+
       </fieldset>
 
       <!-- Datos del Tutor -->
       <fieldset>
         <legend>Datos del Tutor</legend>
-        <div class="form-row">
           <div class="form-group">
             <label for="tutorName">Nombre del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].nombre" name="tutorName" class="form-control" required>
@@ -155,34 +131,8 @@
             <label for="tutorMaternalSurname">Apellido Materno del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].apellido_materno" name="tutorMaternalSurname" class="form-control" required>
           </div>
-        </div>
-
-        <!-- Teléfonos y Correos del Tutor -->
-        <div class="form-row">
-          <div class="form-group">
-            <label for="tutorPhones">Teléfonos del Tutor:</label>
-            <div *ngFor="let phone of studentToEdit.tutores[0].telefonos; let i = index" class="phone-group">
-              <input [(ngModel)]="studentToEdit.tutores[0].telefonos[i]" name="tutorPhones{{i}}" class="form-control">
-              <button *ngIf="studentToEdit.tutores[0].telefonos.length > 1" type="button" (click)="removeTutorPhone(studentToEdit, i)" class="remove-btn">Eliminar</button>
-            </div>
-            <button type="button" (click)="addTutorPhone(studentToEdit)" class="add-btn" [disabled]="studentToEdit?.tutores[0]?.telefonos?.length >= 3">
-              Agregar Teléfono
-            </button>
-          </div>
-
-          <div class="form-group">
-            <label for="tutorEmails">Correos del Tutor:</label>
-            <div *ngFor="let email of studentToEdit.tutores[0].correos; let i = index" class="email-group">
-              <input [(ngModel)]="studentToEdit.tutores[0].correos[i]" name="tutorEmails{{i}}" class="form-control">
-              <button *ngIf="studentToEdit.tutores[0].correos.length > 1" type="button" (click)="removeTutorEmail(studentToEdit, i)" class="remove-btn">Eliminar</button>
-            </div>
-            <button type="button" (click)="addTutorEmail(studentToEdit)" class="add-btn" [disabled]="studentToEdit?.tutores[0]?.correos?.length >= 3">
-              Agregar Correo</button>
-          </div>
-        </div>
 
         <!-- Domicilio del Tutor -->
-        <div class="form-row">
           <div class="form-group">
             <label for="tutorStreet">Calle del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].domicilio.calle" name="tutorStreet" class="form-control" required>
@@ -197,9 +147,8 @@
             <label for="tutorNumberInterior">Número Interior del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].domicilio.numero_interior" name="tutorNumberInterior" class="form-control" required>
           </div>
-        </div>
 
-        <div class="form-row">
+
           <div class="form-group">
             <label for="tutorColonia">Colonia del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].domicilio.colonia" name="tutorColonia" class="form-control" required>
@@ -214,11 +163,9 @@
             <label for="tutorCodigoPostal">Código Postal del Tutor:</label>
             <input [(ngModel)]="studentToEdit.tutores[0].domicilio.codigo_postal" name="tutorCodigoPostal" class="form-control" required>
           </div>
-        </div>
       </fieldset>
 
       <!-- Área y Especialidad -->
-      <div class="form-row">
         <div class="form-group">
           <label for="area">Área:</label>
           <select [(ngModel)]="studentToEdit.carrera.nombre" name="area" class="form-control" (change)="onCareerChange($event)">
@@ -232,7 +179,6 @@
             <option *ngFor="let specialty of specialties" [value]="specialty">{{specialty}}</option>
           </select>
         </div>
-      </div>
 
       <!-- Botones de acción -->
       <button type="submit" class="btn btn-primary">Guardar</button>
