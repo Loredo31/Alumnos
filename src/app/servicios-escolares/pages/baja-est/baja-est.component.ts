@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlumnoService } from '../../../services/alumno.service';
 
 @Component({
   selector: 'app-baja-est',
@@ -7,54 +8,103 @@ import { Router } from '@angular/router';
   styleUrls: ['./baja-est.component.css']
 })
 
-export class BajaEstComponent {
+export class BajaEstComponent implements OnInit{
   searchTerm: string = '';
-  students: any[] = [
-    { firstName: 'Juan', paternalSurname: 'Pérez', maternalSurname: 'Gómez', matricula: '2301', career: 'Ingeniería en Sistemas', role: 5 },
-    { firstName: 'Ana', paternalSurname: 'López', maternalSurname: 'Martínez', matricula: '2302', career: 'Ingeniería en Electrónica', role: 5 },
-    { firstName: 'Carlos', paternalSurname: 'Ramírez', maternalSurname: 'Díaz', matricula: '2303', career: 'Ingeniería Mecánica', role: 5 }
-  ];
+  students: any[] = [];
   filteredStudents: any[] = [];
 
-  constructor(private router: Router) {
-    // Inicialmente mostramos los estudiantes dados de baja temporal
-    this.filteredStudents = this.students.filter(student => student.role === 5);
+  // Variables para el modal
+  showModal: boolean = false;
+  modalMessage: string = '';
+  studentToDelete: any = null;
+
+  constructor(private router: Router, private alumnoService: AlumnoService) {}
+
+  ngOnInit(): void {
+    this.cargarEstudiantes();
   }
 
+  // Obtener estudiantes con rol 2 desde la base de datos
+  cargarEstudiantes(): void {
+    this.alumnoService.obtenerAlumnosBaja().subscribe(
+      (data: any[]) => { // 🔹 Tipado explícito
+        this.students = data;
+        this.filteredStudents = this.filterStudentsByRol(data, 2); // Filtramos solo los de rol 2
+      },
+      (error: any) => {
+        console.error('Error al obtener estudiantes dados de baja:', error);
+      }
+    );
+  }
+
+   // Filtrar estudiantes por rol
+   filterStudentsByRol(students: any[], rol: number): any[] {
+    return students.filter(student => student.rol === rol);
+  }
+
+  // Función de búsqueda
   onSearch(): void {
-    // Filtrar estudiantes por matrícula o nombre
-    if (this.searchTerm) {
-      this.filteredStudents = this.students.filter(student =>
-        student.matricula.includes(this.searchTerm) || 
-        `${student.firstName} ${student.paternalSurname} ${student.maternalSurname}`.toLowerCase().includes(this.searchTerm.toLowerCase())
-      ).filter(student => student.role === 5); // Solo estudiantes dados de baja temporal
-    } else {
-      // Si no hay filtro, mostrar todos los estudiantes dados de baja temporal
-      this.filteredStudents = this.students.filter(student => student.role === 5);
+    if (this.searchTerm.trim() === '') {
+      // Si no hay búsqueda, mostramos todos los estudiantes con rol 2
+      this.filteredStudents = this.filterStudentsByRol(this.students, 2);
+      return;
     }
+
+    const term = this.searchTerm.toLowerCase(); // Convertimos a minúsculas para búsqueda insensible a mayúsculas
+  
+    // Filtrar los estudiantes con rol 2 y que coincidan con el término de búsqueda
+    this.filteredStudents = this.students.filter(student =>
+      (student.matricula.includes(term) ||
+      `${student.nombre} ${student.apellido_paterno} ${student.apellido_materno}`
+        .toLowerCase()
+        .includes(term)) && student.rol === 2
+    );
+  
+    console.log('Resultados de búsqueda:', this.filteredStudents); // Verifica en la consola los resultados
   }
 
-  onRestore(student: any): void {
-    // Cambiar el rol del estudiante de 5 (baja temporal) a 1 (activo)
-    student.role = 1;
-    alert(`${student.firstName} ha sido restaurado.`);
-
-    // Mover el estudiante restaurado a la lista de estudiantes activos
-    this.students = this.students.filter(s => s !== student);
-    this.students.push(student);
-
-    // Redirigir a la página de "Buscar Estudiantes" (buscar-est)
-    this.router.navigate(['/buscar-estudiante']);
-  }
-
-  onDelete(student: any): void {
-    if (window.confirm(`¿Estás seguro de que deseas dar de baja definitivamente a ${student.firstName} ${student.paternalSurname}?`)) {
-      // Eliminar el estudiante de la lista de baja temporal
-      this.filteredStudents = this.filteredStudents.filter(s => s !== student);
-      alert(`${student.firstName} ha sido dado de baja definitivamente.`);
-
-      // Eliminar el estudiante completamente de la lista
-      this.students = this.students.filter(s => s !== student);
+    // Restaurar estudiante (cambiar rol de 2 a 1)
+    onRestore(student: any): void {
+      // Restaurar rol de 2 a 1
+      student.rol = 1;  // Cambiar el rol a 1 (activo)
+      this.alumnoService.actualizarAlumno(student._id, student).subscribe(
+        () => {
+          alert(`${student.nombre} ha sido restaurado.`);
+          this.cargarEstudiantes();  // Refrescar la lista después de restaurar
+        },
+        (error) => {
+          console.error('Error al restaurar el estudiante:', error);
+          alert('Hubo un error al restaurar el estudiante.');
+        }
+      );
     }
+
+    onDelete(student: any): void {
+      this.studentToDelete = student;
+      this.modalMessage = `¿Estás seguro de que deseas dar de baja a ${student.nombre} ${student.apellido_paterno}?`;
+      this.showModal = true;
+    }
+  
+    // Cerrar el modal
+    closeModal(): void {
+      this.showModal = false;
+    }
+  
+ // Confirmar la baja definitiva (eliminar completamente)
+ onConfirmDelete(): void {
+  if (this.studentToDelete) {
+    // Baja definitiva (eliminar estudiante)
+    this.alumnoService.eliminarAlumno(this.studentToDelete._id).subscribe(
+      () => {
+        alert(`${this.studentToDelete.nombre} ha sido eliminado definitivamente.`);
+        this.cargarEstudiantes(); // Refrescar lista después de eliminar
+      },
+      (error) => {
+        console.error('Error al eliminar al estudiante:', error);
+        alert('Hubo un error al eliminar al estudiante.');
+      }
+    );
   }
+  this.closeModal();
+}
 }

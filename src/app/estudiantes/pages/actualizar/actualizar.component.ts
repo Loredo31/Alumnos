@@ -19,11 +19,11 @@ export class ActualizarComponent implements OnInit {
   ngOnInit(): void {
     // Obtener el ID del estudiante desde el localStorage
     const alumnoId = localStorage.getItem('estudianteId');
-
+  
     if (alumnoId) {
       // Usamos el servicio para obtener los datos del alumno por su ID
-      this.alumnoService.obtenerAlumno(alumnoId).subscribe(
-        (data) => {
+      this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(
+        (data: any) => {  // Especificamos el tipo de data
           // Aseguramos que telefonos y correos sean siempre arrays
           this.user = { 
             ...data, 
@@ -33,7 +33,7 @@ export class ActualizarComponent implements OnInit {
             tutor: data.tutores && data.tutores[0] || { domicilio: {}, telefonos: [], correos: [] }
           };
         },
-        (error) => {
+        (error: any) => {  // Especificamos el tipo de error
           console.error('Error al obtener los datos del estudiante', error);
         }
       );
@@ -50,7 +50,7 @@ export class ActualizarComponent implements OnInit {
         () => {
           alert('Perfil actualizado correctamente');
         },
-        (error) => {
+        (error: any) => {  // Especificamos el tipo de error
           console.error('Error al actualizar el perfil', error);
         }
       );

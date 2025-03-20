@@ -1,19 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AlumnoService } from '../../../services/alumno.service'; // Asegúrate de importar el servicio correcto
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  [x: string]: any;
-  studentName: string = 'Juan Pérez';  // Aquí puedes obtener el nombre dinámicamente (por ejemplo, desde un servicio o autenticación)
+  studentName: string = '';  // Aquí se almacenará el nombre del estudiante
 
-  constructor() { }
+  constructor(private alumnoService: AlumnoService) { }
 
   ngOnInit(): void {
-    // Cualquier lógica adicional al inicializar la página
+    // Obtener el ID del estudiante desde localStorage o cualquier otra fuente
+    const alumnoId = localStorage.getItem('estudianteId');
+
+    if (alumnoId) {
+      // Llamar al servicio para obtener los datos del alumno
+      this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(
+        (data) => {
+          // Asignar el nombre del alumno desde la respuesta del API
+          this.studentName = `${data.nombre} ${data.apellido_paterno} ${data.apellido_materno}`;
+        },
+        (error) => {
+          console.error('Error al obtener los datos del estudiante', error);
+        }
+      );
+    } else {
+      console.log('ID del estudiante no encontrado');
+    }
   }
-
-
 }

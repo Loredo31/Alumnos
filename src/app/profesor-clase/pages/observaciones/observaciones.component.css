@@ -1,3 +1,17 @@
+/* Estilo para la imagen de fondo */
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://s03.s3c.es/imag/_v0/770x420/6/1/9/Alumnos-profesor-clase-iStock.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);  /* Agrega un desenfoque a la imagen de fondo */
+  z-index: -1; /* Asegura que la imagen esté detrás de los contenidos */
+}
+
 /* Estilo para la tabla de observaciones */
 .table-container {
   width: 100%;

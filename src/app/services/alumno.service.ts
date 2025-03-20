@@ -7,27 +7,43 @@ import { Observable } from 'rxjs';
 })
 export class AlumnoService {
 
-
-  private apiUrl = 'http://localhost:3000/api/alumnos';  // URL de tu API
+  private apiUrl = 'http://localhost:3000/api/alumnos';  
 
   constructor(private http: HttpClient) { }
 
-  // Método para registrar un nuevo alumno
+  
+  // Crear un nuevo alumno
   registrarAlumno(alumno: any): Observable<any> {
     return this.http.post(this.apiUrl, alumno);
   }
 
-  // Método para obtener los datos del alumno por su ID
-  obtenerAlumno(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+   // Obtener todos los alumnos
+   obtenerAlumnos(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
+
+  // Obtener un alumno por ID
+  obtenerAlumnoPorId(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  // Obtener solo los alumnos con rol 2 (dados de baja temporal)
+  obtenerAlumnosBaja(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?rol=2`);
+  }
+
+  // Actualizar un alumno por ID
   actualizarAlumno(id: string, alumno: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, alumno);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, alumno);
   }
 
-  // Método para obtener todos los alumnos
-obtenerAlumnos(): Observable<any[]> {
-  return this.http.get<any[]>(this.apiUrl);
-}
-}
+  // Restaurar alumno (cambiar rol de 2 a 1)
+  restaurarAlumno(id: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/restore`, { rol: 1 });
+  }
 
+  // Eliminar un alumno por ID
+  eliminarAlumno(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+}

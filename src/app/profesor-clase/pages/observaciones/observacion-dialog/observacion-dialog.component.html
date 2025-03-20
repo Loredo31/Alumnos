@@ -7,13 +7,30 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
+    <mat-label>Profesor</mat-label>
+    <mat-select [(ngModel)]="newObservation.teacherId">
+      <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+        {{ teacher.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
     <mat-label>Asignatura</mat-label>
-    <input matInput [(ngModel)]="newObservation.subject">
+    <mat-select [(ngModel)]="newObservation.subject">
+      <mat-option *ngFor="let specialty of specialties" [value]="specialty">
+        {{ specialty }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Semestre</mat-label>
-    <input matInput type="number" [(ngModel)]="newObservation.semester">
+    <mat-select [(ngModel)]="newObservation.semester">
+      <mat-option *ngFor="let semester of semesters" [value]="semester">
+        {{ semester }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline">

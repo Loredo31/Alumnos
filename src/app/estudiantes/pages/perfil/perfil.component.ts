@@ -20,16 +20,16 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     // Solo establecer un ID si no está presente en el localStorage (para pruebas)
-    if (!localStorage.getItem('estudianteId')) {
-      localStorage.setItem('estudianteId', '251T0001');  // Este es un ID de prueba
+    if (!localStorage.getItem('-_id')) {
+      localStorage.setItem('_id', '67d65008899a15cd780c730f');  // Este es un ID de prueba
     }
 
-    const alumnoId = localStorage.getItem('estudianteId');  // Obtener el ID del estudiante desde el localStorage
+    const alumnoId = localStorage.getItem('_id');  // Obtener el ID del estudiante desde el localStorage
 
     if (alumnoId) {
       // Usamos el servicio para obtener los datos del alumno por su ID
-      this.alumnoService.obtenerAlumno(alumnoId).subscribe(
-        (data) => {
+      this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(  // Cambié a obtenerAlumnoPorId
+        (data: any) => {  // Especificamos el tipo de data
           // Aseguramos que telefonos y correos sean siempre arrays
           this.user = { 
             ...data, 
@@ -39,7 +39,7 @@ export class PerfilComponent implements OnInit {
             tutor: data.tutores && data.tutores[0] || { domicilio: {}, telefonos: [], correos: [] }
           };
         },
-        (error) => {
+        (error: any) => {  // Especificamos el tipo de error
           console.error('Error al obtener los datos del estudiante', error);
         }
       );

@@ -13,17 +13,22 @@ export class ObservacionDialogComponent {
     semester: 1,
     year: new Date().getFullYear(),
     description: '',
-    teacherId: '12345', // Asegúrate de que este ID sea el correcto para el profesor
-    teacherName: 'Profesor Simulado'  // Asegúrate de asignar un nombre para el profesor
+    teacherId: '', // Asegúrate de que este ID sea el correcto para el profesor
+    teacherName: ''  // Asegúrate de asignar un nombre para el profesor
   };
 
+  teachers: { id: string, name: string }[] = [];
+  semesters: number[] = [];
+  specialties: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ObservacionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (data) {
-      this.newObservation = { ...data };
+      this.teachers = data.teachers;
+      this.semesters = data.semesters;
+      this.specialties = data.specialties;
     }
   }
 

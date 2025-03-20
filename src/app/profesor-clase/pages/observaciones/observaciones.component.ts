@@ -11,10 +11,9 @@ interface Observation {
   semester: number;
   year: number;
   description: string;
-  createdAt: string;  // Fecha de creación
-  updatedAt: string;  // Fecha de última modificación
+  createdAt: string; // Fecha de creación
+  updatedAt: string; // Fecha de última modificación
 }
-
 
 @Component({
   selector: 'app-observaciones',
@@ -24,8 +23,25 @@ interface Observation {
 export class ObservacionesComponent implements OnInit {
   observations: Observation[] = [];
   filteredObservations: Observation[] = [];
-  profesorId: string = '12345'; // Este es el ID del profesor, cámbialo según corresponda
-  
+  profesorId: string = ''; // Este es el ID del profesor, cámbialo según corresponda
+
+  // Profesores por defecto
+  teachers: { id: string, name: string }[] = [
+    { id: '1', name: 'Profesor A' },
+    { id: '2', name: 'Profesor B' },
+    { id: '3', name: 'Profesor C' }
+  ];
+
+  // Semestres (1-6)
+  semesters: number[] = [1, 2, 3, 4, 5, 6];
+
+  // Asignaturas por carrera
+  specialties: string[] = [];
+
+  // Carreras disponibles
+  careers: string[] = ['Ingeniería en Sistemas', 'Ingeniería en Electrónica', 'Ingeniería Mecánica'];
+
+  selectedCareer: string = ''; // Carreras seleccionadas
 
   constructor(
     private observacionService: ObservacionService,
@@ -49,7 +65,11 @@ export class ObservacionesComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ObservacionDialogComponent, {
       width: '400px',
-      data: {} // Datos vacíos para nueva observación
+      data: {
+        teachers: this.teachers,
+        semesters: this.semesters,
+        specialties: this.specialties
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -61,7 +81,7 @@ export class ObservacionesComponent implements OnInit {
 
   guardarObservacion(newObservation: Observation) {
     newObservation.teacherId = this.profesorId;  // Asegúrate de que teacherId sea el ID del profesor
-    newObservation.teacherName = 'Profesor Simulado';
+    newObservation.teacherName = ''; // Este debería ser el nombre del profesor
 
     this.observacionService.agregarObservacion(newObservation).subscribe(
       (response) => {
@@ -70,5 +90,16 @@ export class ObservacionesComponent implements OnInit {
       },
       (error) => console.error('Error al guardar observación:', error)
     );
+  }
+
+  onCareerChange(event: any): void {
+    const selectedCareer = event.target.value;
+    if (selectedCareer === 'Ingeniería en Sistemas') {
+      this.specialties = ['Redes', 'Desarrollo de Software'];
+    } else if (selectedCareer === 'Ingeniería en Electrónica') {
+      this.specialties = ['Automatización', 'Electrónica Analógica'];
+    } else if (selectedCareer === 'Ingeniería Mecánica') {
+      this.specialties = ['Diseño Mecánico', 'Mantenimiento Industrial'];
+    }
   }
 }

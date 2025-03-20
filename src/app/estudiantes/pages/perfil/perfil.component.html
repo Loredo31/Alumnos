@@ -1,3 +1,5 @@
+<div class="background-image"></div> <!-- Fondo de la página -->
+
 <div class="perfil-container">
   <mat-card class="perfil-card">
     <mat-card-header>
@@ -29,7 +31,7 @@
         </div>
         <div class="profile-item">
           <span class="label">Fecha de Nacimiento:</span>
-          <span>{{ user?.fecha_nacimiento | date }}</span> <!-- Usa el pipe 'date' para formatear la fecha -->
+          <span>{{ user?.fecha_nacimiento | date }}</span>
         </div>
         <div class="profile-item">
           <span class="label">Sexo:</span>
@@ -53,17 +55,17 @@
         </div>
         <div class="profile-item">
           <span class="label">Teléfonos:</span>
-          <span>{{ user?.telefonos?.join(', ') }}</span> <!-- Une los teléfonos con una coma de manera segura -->
+          <span>{{ user?.telefonos?.join(', ') }}</span>
         </div>
         <div class="profile-item">
           <span class="label">Correos:</span>
-          <span>{{ user?.correos?.join(', ') }}</span> <!-- Une los correos con una coma de manera segura -->
+          <span>{{ user?.correos?.join(', ') }}</span>
         </div>
 
         <!-- Domicilio del Estudiante -->
         <div class="profile-item">
           <span class="label">Calle:</span>
-          <span>{{ user?.domicilio?.calle }}</span> <!-- Navegación segura para evitar errores -->
+          <span>{{ user?.domicilio?.calle }}</span>
         </div>
         <div class="profile-item">
           <span class="label">Número Interior:</span>
@@ -101,11 +103,11 @@
         </div>
         <div class="profile-item">
           <span class="label">Teléfonos del Tutor:</span>
-          <span>{{ user?.tutor?.telefonos?.join(', ') }}</span> <!-- Une los teléfonos del tutor con una coma -->
+          <span>{{ user?.tutor?.telefonos?.join(', ') }}</span>
         </div>
         <div class="profile-item">
           <span class="label">Correos del Tutor:</span>
-          <span>{{ user?.tutor?.correos?.join(', ') }}</span> <!-- Une los correos del tutor con una coma -->
+          <span>{{ user?.tutor?.correos?.join(', ') }}</span>
         </div>
 
         <!-- Área, Especialidad y Certificado -->
@@ -123,12 +125,5 @@
         </div>
       </div>
     </mat-card-content>
-
-    <!--<mat-card-actions>
-      <div class="buttons">
-        <button mat-raised-button color="primary" routerLink="/actualizar">Actualizar</button>
-        <button mat-raised-button color="accent" routerLink="/consultas">Consultas</button>
-      </div>
-    </mat-card-actions>-->
   </mat-card>
 </div>

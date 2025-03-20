@@ -12,7 +12,7 @@ export class ObservacionService {
 
   // Obtener las observaciones de un profesor específico
   obtenerObservacionesPorProfesor(profesorId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/profesor/${profesorId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/profesor/:profesorId/${profesorId}`);
   }
 
   // Agregar una nueva observación
