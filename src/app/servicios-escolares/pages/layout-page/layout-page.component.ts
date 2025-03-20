@@ -1,6 +1,6 @@
-
-
 import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'app-layout-page',
@@ -14,6 +14,12 @@ export class LayoutPageComponent {
     {label:'Agregar estudiante',icon:'person_add',url:'./nuevo-estuduante'},
     {label:'Buscar estudiante',icon:'search',url:'./buscar-estudiante'},
     {label:'Bajas temporales', icon:'person_remove', url:'./baja-estudiantes'},
-    {label:'Cerrar sesión', icon:'exit_to_app', url:'./'}
-  ]
+    {label:'Cerrar sesión', icon:'exit_to_app', url:'', action: () => this.logout()}
+  ];
+
+  constructor(private authService: AuthService) {}
+
+  logout():void{
+    this.authService.logout
+  }
 }
