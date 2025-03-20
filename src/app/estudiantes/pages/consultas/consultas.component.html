@@ -1,0 +1,15 @@
+<div class="consultas-container">
+    <h1>Consultas</h1>
+    <div>
+      <label for="materia">Materia:</label>
+      <input type="text" id="materia" [(ngModel)]="materia">
+  
+      <label for="profesor">Profesor:</label>
+      <input type="text" id="profesor" [(ngModel)]="profesor">
+    </div>
+  
+    <div class="buttons">
+      <button (click)="consultar()">Consultar</button>
+    </div>
+  </div>
+  
