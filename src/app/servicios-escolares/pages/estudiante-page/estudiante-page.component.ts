@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlumnoService } from '../../../services/alumno.service';
+import { ConsecutivoService } from '../../../services/consecutivo.service';
 
 @Component({
   selector: 'app-estudiante-page',
   templateUrl: './estudiante-page.component.html',
   styleUrls: ['./estudiante-page.component.css']
 })
-export class EstudiantePageComponent {
+export class EstudiantePageComponent implements OnInit{
+  consecutivo: number = 1;
   alumno: any = {
     matricula: '',
     foto: '',
@@ -58,19 +60,41 @@ export class EstudiantePageComponent {
   registroExitoso: boolean = false;
 
   edadInvalida: boolean = false;
-  telefonoInvalido: boolean = false;
 
-  constructor(private alumnoService: AlumnoService) {}
+   ultimoConsecutivo: string | null = null;
+
+  constructor(private alumnoService: AlumnoService, private consecutivoService: ConsecutivoService) {}
+
+  ngOnInit(): void {
+    this.obtenerConsecutivo(); // Obtener el último consecutivo al iniciar el componente
+  }
+
+  obtenerConsecutivo() {
+    this.consecutivoService.obtenerUltimoConsecutivo().subscribe(
+      (data) => {
+        this.consecutivo = data.consecutivo;
+        this.generateMatricula();
+      },
+      (error) => {
+        console.error('Error al obtener el consecutivo:', error);
+      }
+    );
+  }
 
   // Generación automática de matrícula
   generateMatricula(): void {
-    const year = new Date().getFullYear().toString().slice(-2);
-    const semester = new Date().getMonth() < 6 ? '1' : '2';
-    const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase();
-    const matriculaCount = 1001;
-    const matriculaNumber = matriculaCount.toString().padStart(4, '0');
+    if (this.consecutivo) {
+      const year = new Date().getFullYear().toString().slice(-2);
+      const semester = new Date().getMonth() < 6 ? '1' : '2';
+      const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase();
+      const matriculaNumber = (Number(this.consecutivo) + 1).toString().padStart(4, '0');
+      //const matriculaNumber = (parseInt(this.consecutivo, 10) + 1).toString().padStart(4, '0'); // Incrementar el consecutivo
 
-    this.alumno.matricula = `${year}${semester}${firstLetterOfSurname}${matriculaNumber}`;
+      this.alumno.matricula = `${year}${semester}${firstLetterOfSurname}${matriculaNumber}`;
+    } else {
+      // En caso de que no se obtenga el consecutivo
+      console.error('No se pudo obtener el último consecutivo');
+    }
   }
 
   // Manejo de la foto
@@ -81,7 +105,7 @@ export class EstudiantePageComponent {
       reader.onload = (e) => {
         const result = e.target?.result ?? null;
         this.photoPreview = result;
-        this.alumno.photo = file.name;
+        this.alumno.photo = result;
       };
       reader.readAsDataURL(file);
     }
@@ -105,6 +129,20 @@ export class EstudiantePageComponent {
     }
   }
 
+  validarTelefonosYCorreos(): boolean {
+    const telefonoRegex = /^\d{10}$/;
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    const telefonosValidos = this.alumno.telefonos.every((tel: string) => telefonoRegex.test(tel));
+    const correosValidos = this.alumno.correos.every((correo: string) => correoRegex.test(correo));
+    const tutorTelefonosValidos = this.alumno.tutores[0].telefonos.every((tel: string) => telefonoRegex.test(tel));
+    const tutorCorreosValidos = this.alumno.tutores[0].correos.every((correo: string) => correoRegex.test(correo));
+  
+    return telefonosValidos && correosValidos && tutorTelefonosValidos && tutorCorreosValidos;
+  }
+  
+  
+
   // Validación de edad
   validarEdad(): void {
     const fechaNacimiento = new Date(this.alumno.fecha_nacimiento);
@@ -115,16 +153,6 @@ export class EstudiantePageComponent {
       this.edadInvalida = true;
     } else {
       this.edadInvalida = false;
-    }
-  }
-
-  // Validación de teléfono (10 dígitos)
-  validarTelefono(): void {
-    const telefono = this.alumno.telefonos[0];
-    if (telefono && telefono.length === 10 && /^[0-9]+$/.test(telefono)) {
-      this.telefonoInvalido = false;
-    } else {
-      this.telefonoInvalido = true;
     }
   }
 
@@ -166,7 +194,8 @@ export class EstudiantePageComponent {
 
   // Registrar alumno
   registrarAlumno(): void {
-    if (this.edadInvalida || this.telefonoInvalido) {
+    this.generateMatricula();
+    if (this.edadInvalida || !this.validarTelefonosYCorreos()) {
       return; // Si la edad o el teléfono son inválidos, no se realiza el registro
     }
 
@@ -186,6 +215,10 @@ export class EstudiantePageComponent {
         // Aquí puedes manejar el error si la solicitud no se realiza correctamente
       }
     );
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
   }
 
   // Limpiar el formulario

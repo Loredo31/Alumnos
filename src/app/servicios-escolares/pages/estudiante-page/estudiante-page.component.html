@@ -11,11 +11,11 @@
 <form (ngSubmit)="registrarAlumno()" class="form-container">
 
   <!-- Matrícula y Foto -->
- <!-- <div class="form-row">
+ <div class="form-row">
     <div class="form-group">
       <label for="matricula">Matrícula:</label>
       <input [(ngModel)]="alumno.matricula" name="matricula" class="form-control" required readonly>
-    </div>-->
+    </div>
 
     <!-- Foto -->
     <div class="form-group photo-input-container">
@@ -24,6 +24,7 @@
       <div *ngIf="photoPreview" class="photo-preview-wrapper">
         <img [src]="photoPreview" alt="Vista previa" class="photo-preview">
       </div>
+    </div>
     </div>
 
   <!-- Nombre y Apellidos -->
@@ -90,8 +91,8 @@
   <div class="form-row">
     <div class="form-group">
       <label for="telefonos">Teléfonos:</label>
-      <div *ngFor="let phone of alumno.telefonos; let i = index" class="phone-group">
-        <input [(ngModel)]="alumno.telefonos[i]" name="telefonos{{i}}" class="form-control">
+      <div *ngFor="let phone of alumno.telefonos; let i = index; trackBy: trackByIndex">
+        <input [(ngModel)]="alumno.telefonos[i]" [name]="'telefonos' + i" class="form-control">
         <button *ngIf="alumno.telefonos.length > 1" type="button" (click)="removePhone(i)" class="remove-btn">Eliminar</button>
       </div>
       <button type="button" (click)="addPhone()" class="add-btn" [disabled]="alumno.telefonos.length >= 3">Agregar Teléfono</button>
@@ -99,8 +100,9 @@
 
     <div class="form-group">
       <label for="correos">Correos:</label>
-      <div *ngFor="let email of alumno.correos; let i = index" class="email-group">
-        <input [(ngModel)]="alumno.correos[i]" name="correos{{i}}" class="form-control">
+      <div *ngFor="let email of alumno.correos; let i = index; trackBy: trackByIndex">
+
+        <input [(ngModel)]="alumno.correos[i]" [name]="'correos' + i" class="form-control">
         <button *ngIf="alumno.correos.length > 1" type="button" (click)="removeEmail(i)" class="remove-btn">Eliminar</button>
       </div>
       <button type="button" (click)="addEmail()" class="add-btn" [disabled]="alumno.correos.length >= 3">Agregar Correo</button>
@@ -166,7 +168,7 @@
     <div class="form-row">
       <div class="form-group">
         <label for="tutorPhones">Teléfonos del Tutor:</label>
-        <div *ngFor="let phone of alumno.tutores[0].telefonos; let i = index" class="phone-group">
+          <div *ngFor="let phone of alumno.tutores[0].telefonos; let i = index; trackBy: trackByIndex">
           <input [(ngModel)]="alumno.tutores[0].telefonos[i]" name="tutorPhones{{i}}" class="form-control">
           <button *ngIf="alumno.tutores[0].telefonos.length > 1" type="button" (click)="removeTutorPhone(i)" class="remove-btn">Eliminar</button>
         </div>
@@ -175,7 +177,7 @@
 
       <div class="form-group">
         <label for="tutorEmails">Correos del Tutor:</label>
-        <div *ngFor="let email of alumno.tutores[0].correos; let i = index" class="email-group">
+        <div *ngFor="let email of alumno.tutores[0].correos; let i = index; trackBy: trackByIndex">
           <input [(ngModel)]="alumno.tutores[0].correos[i]" name="tutorEmails{{i}}" class="form-control">
           <button *ngIf="alumno.tutores[0].correos.length > 1" type="button" (click)="removeTutorEmail(i)" class="remove-btn">Eliminar</button>
         </div>
