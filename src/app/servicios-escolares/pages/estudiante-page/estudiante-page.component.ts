@@ -7,50 +7,51 @@ import { ConsecutivoService } from '../../../services/consecutivo.service';
   templateUrl: './estudiante-page.component.html',
   styleUrls: ['./estudiante-page.component.css']
 })
-export class EstudiantePageComponent implements OnInit{
+export class EstudiantePageComponent implements OnInit {
   consecutivo: number = 1;
+  correoAlumno: string = '';
   alumno: any = {
-    matricula: '',
-    foto: '',
-    apellido_paterno: '',
-    apellido_materno: '',
-    nombre: '',
-    fecha_nacimiento: '',
-    sexo: '',
-    telefonos: [''],
-    correos: [''],
-    promedio_bachillerato: null,
-    especialidad_bachillerato: '',
-    rfc: '',
-    contrasenia: '',
+    matricula: '888889',
+    foto: 'DND',
+    apellido_paterno: 'MNKNK',
+    apellido_materno: 'MN',
+    nombre: 'NJ',
+    fecha_nacimiento: new Date(),
+    sexo: 'M',
+    telefonos: [],
+    correos: [],
+    promedio_bachillerato: 9.5,
+    especialidad_bachillerato: 'Programacion',
+    rfc: 'SHBDBHDBHJD',
+    contrasenia: 'brandon',
     domicilio: {
-      calle: '',
-      numero_interior: '',
-      numero_exterior: '',
-      colonia: '',
-      codigo_postal: '',
-      ciudad: ''
+      calle: 'Cantarranas',
+      numero_interior: '121',
+      numero_exterior: '121',
+      colonia: 'Los Aztecas',
+      codigo_postal: '7619',
+      ciudad: 'Guanajuato'
     },
     tutores: [{
-      nombre: '',
-      apellido_paterno: '',
-      apellido_materno: '',
-      telefonos: [''],
-      correos: [''],
+      nombre: 'Brandon',
+      apellido_paterno: 'Gustavo',
+      apellido_materno: 'Amaro',
+      telefonos: [],
+      correos: [],
       domicilio: {
-        calle: '',
-        numero_exterior: '',
-        colonia: '',
-        ciudad: '',
-        codigo_postal: ''
+        calle: 'XD',
+        numero_exterior: '88',
+        colonia: '89',
+        ciudad: '89',
+        codigo_postal: '889'
       }
     }],
     carrera: {
-      nombre: '',
-      especialidad: ''
+      nombre: 'xd',
+      especialidad: 'xd'
     },
-    certificado_bachillerato: 0,
-    photo: ''
+    certificado_bachillerato: 1,
+    photo: 'njssbhsshjs'
   };
 
   areas: string[] = ['Área Económico Administrativo', 'Área Industrial, Eléctrica y Electrónica', 'Área en Tecnologías de la Información'];
@@ -59,9 +60,7 @@ export class EstudiantePageComponent implements OnInit{
   photoPreview: string | ArrayBuffer | null = null;
   registroExitoso: boolean = false;
 
-  edadInvalida: boolean = false;
-
-   ultimoConsecutivo: string | null = null;
+  ultimoConsecutivo: string | null = null;
 
   constructor(private alumnoService: AlumnoService, private consecutivoService: ConsecutivoService) {}
 
@@ -88,7 +87,6 @@ export class EstudiantePageComponent implements OnInit{
       const semester = new Date().getMonth() < 6 ? '1' : '2';
       const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase();
       const matriculaNumber = (Number(this.consecutivo) + 1).toString().padStart(4, '0');
-      //const matriculaNumber = (parseInt(this.consecutivo, 10) + 1).toString().padStart(4, '0'); // Incrementar el consecutivo
 
       this.alumno.matricula = `${year}${semester}${firstLetterOfSurname}${matriculaNumber}`;
     } else {
@@ -129,31 +127,13 @@ export class EstudiantePageComponent implements OnInit{
     }
   }
 
-  validarTelefonosYCorreos(): boolean {
-    const telefonoRegex = /^\d{10}$/;
-    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-    const telefonosValidos = this.alumno.telefonos.every((tel: string) => telefonoRegex.test(tel));
-    const correosValidos = this.alumno.correos.every((correo: string) => correoRegex.test(correo));
-    const tutorTelefonosValidos = this.alumno.tutores[0].telefonos.every((tel: string) => telefonoRegex.test(tel));
-    const tutorCorreosValidos = this.alumno.tutores[0].correos.every((correo: string) => correoRegex.test(correo));
-  
-    return telefonosValidos && correosValidos && tutorTelefonosValidos && tutorCorreosValidos;
-  }
-  
-  
-
-  // Validación de edad
-  validarEdad(): void {
-    const fechaNacimiento = new Date(this.alumno.fecha_nacimiento);
-    const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
-    const mes = new Date().getMonth() - fechaNacimiento.getMonth();
-
-    if (edad < 15 || (edad === 15 && mes < 0)) {
-      this.edadInvalida = true;
-    } else {
-      this.edadInvalida = false;
+  agregarCorreo(): void {
+    if (this.alumno.correos?.includes(this.correoAlumno.trim())) {
+      alert("La imagen ya existe en la lista.");
+      return;
     }
+    this.alumno.correos?.push(this.correoAlumno.trim());
+    this.correoAlumno = ''; 
   }
 
   // Manejo de los teléfonos del alumno
@@ -194,11 +174,8 @@ export class EstudiantePageComponent implements OnInit{
 
   // Registrar alumno
   registrarAlumno(): void {
-    this.generateMatricula();
-    if (this.edadInvalida || !this.validarTelefonosYCorreos()) {
-      return; // Si la edad o el teléfono son inválidos, no se realiza el registro
-    }
-
+    // this.generateMatricula();
+    console.log(this.alumno)
     this.alumnoService.registrarAlumno(this.alumno).subscribe(
       (response) => {
         console.log('Alumno registrado con éxito:', response);

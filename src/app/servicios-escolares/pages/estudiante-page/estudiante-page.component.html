@@ -14,16 +14,13 @@
  <div class="form-row">
     <div class="form-group">
       <label for="matricula">Matrícula:</label>
-      <input [(ngModel)]="alumno.matricula" name="matricula" class="form-control" required readonly>
+      <input [(ngModel)]="alumno.matricula" name="matricula" class="form-control">
     </div>
 
     <!-- Foto -->
     <div class="form-group photo-input-container">
       <label for="photo">Foto:</label>
-      <input id="photo" type="file" (change)="onPhotoSelected($event)" class="form-control">
-      <div *ngIf="photoPreview" class="photo-preview-wrapper">
-        <img [src]="photoPreview" alt="Vista previa" class="photo-preview">
-      </div>
+      <input [(ngModel)]="alumno.foto" name="foto" class="form-control" >
     </div>
     </div>
 
