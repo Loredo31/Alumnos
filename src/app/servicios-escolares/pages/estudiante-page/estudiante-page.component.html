@@ -19,11 +19,17 @@
 
     <!-- Foto -->
     <div class="form-group photo-input-container">
-      <label for="photo">Foto:</label>
-      <input [(ngModel)]="alumno.foto" name="foto" class="form-control" >
+      
+     
+      <label for="fotoUrl">URL de la Foto</label>
+      <input type="text" id="fotoUrl" (input)="onInputChange($event)"  placeholder="Ingresa la URL de la foto" />
+    </div>
+    
+    <!-- Mostrar la imagen cuando la URL esté disponible -->
+    <div *ngIf="alumno.foto">
+      <img [src]="alumno.foto" alt="Foto del Alumno" width="200" height="200" />
     </div>
     </div>
-
   <!-- Nombre y Apellidos -->
   <div class="form-row">
     <div class="form-group">

@@ -20,8 +20,8 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     // Solo establecer un ID si no está presente en el localStorage (para pruebas)
-    if (!localStorage.getItem('-_id')) {
-      localStorage.setItem('_id', '67d65008899a15cd780c730f');  // Este es un ID de prueba
+    if (!localStorage.getItem('')) {
+      localStorage.setItem('', '');  // Este es un ID de prueba
     }
 
     const alumnoId = localStorage.getItem('_id');  // Obtener el ID del estudiante desde el localStorage

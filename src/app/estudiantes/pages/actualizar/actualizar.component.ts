@@ -18,8 +18,8 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener el ID del estudiante desde el localStorage
-    const alumnoId = localStorage.getItem('estudianteId');
-  
+    const alumnoId = localStorage.getItem('_id');  // Verifica si esta clave existe en localStorage
+
     if (alumnoId) {
       // Usamos el servicio para obtener los datos del alumno por su ID
       this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(
@@ -42,10 +42,12 @@ export class ActualizarComponent implements OnInit {
     }
   }
 
-  actualizar() {
-    const alumnoId = localStorage.getItem('estudianteId');
+  // Función para actualizar la información del estudiante
+  actualizar(): void {
+    const alumnoId = localStorage.getItem('estudianteId');  // Verifica si el alumnoId está presente
     
     if (alumnoId) {
+      // Usamos el servicio para actualizar el alumno por su ID
       this.alumnoService.actualizarAlumno(alumnoId, this.user).subscribe(
         () => {
           alert('Perfil actualizado correctamente');
@@ -59,7 +61,8 @@ export class ActualizarComponent implements OnInit {
     }
   }
 
-  cancelar() {
+  // Función para cancelar la edición
+  cancelar(): void {
     alert('Edición cancelada');
   }
 }

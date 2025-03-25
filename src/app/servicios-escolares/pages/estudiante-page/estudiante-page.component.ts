@@ -11,47 +11,47 @@ export class EstudiantePageComponent implements OnInit {
   consecutivo: number = 1;
   correoAlumno: string = '';
   alumno: any = {
-    matricula: '888889',
-    foto: 'DND',
-    apellido_paterno: 'MNKNK',
-    apellido_materno: 'MN',
-    nombre: 'NJ',
+    matricula: '',
+    foto: '',
+    apellido_paterno: '',
+    apellido_materno: '',
+    nombre: '',
     fecha_nacimiento: new Date(),
-    sexo: 'M',
+    sexo: '',
     telefonos: [],
     correos: [],
-    promedio_bachillerato: 9.5,
-    especialidad_bachillerato: 'Programacion',
-    rfc: 'SHBDBHDBHJD',
-    contrasenia: 'brandon',
+    promedio_bachillerato: 0,
+    especialidad_bachillerato: '',
+    rfc: '',
+    contrasenia: '',
     domicilio: {
-      calle: 'Cantarranas',
-      numero_interior: '121',
-      numero_exterior: '121',
-      colonia: 'Los Aztecas',
-      codigo_postal: '7619',
-      ciudad: 'Guanajuato'
+      calle: '',
+      numero_interior: '',
+      numero_exterior: '',
+      colonia: '',
+      codigo_postal: '',
+      ciudad: ''
     },
     tutores: [{
-      nombre: 'Brandon',
-      apellido_paterno: 'Gustavo',
-      apellido_materno: 'Amaro',
+      nombre: '',
+      apellido_paterno: '',
+      apellido_materno: '',
       telefonos: [],
       correos: [],
       domicilio: {
-        calle: 'XD',
-        numero_exterior: '88',
-        colonia: '89',
-        ciudad: '89',
-        codigo_postal: '889'
+        calle: '',
+        numero_exterior: '',
+        colonia: '',
+        ciudad: '',
+        codigo_postal: ''
       }
     }],
     carrera: {
-      nombre: 'xd',
-      especialidad: 'xd'
+      nombre: '',
+      especialidad: ''
     },
     certificado_bachillerato: 1,
-    photo: 'njssbhsshjs'
+    photo: ''
   };
 
   areas: string[] = ['Área Económico Administrativo', 'Área Industrial, Eléctrica y Electrónica', 'Área en Tecnologías de la Información'];
@@ -83,29 +83,29 @@ export class EstudiantePageComponent implements OnInit {
   // Generación automática de matrícula
   generateMatricula(): void {
     if (this.consecutivo) {
-      const year = new Date().getFullYear().toString().slice(-2);
-      const semester = new Date().getMonth() < 6 ? '1' : '2';
-      const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase();
-      const matriculaNumber = (Number(this.consecutivo) + 1).toString().padStart(4, '0');
-
+      const year = new Date().getFullYear().toString().slice(-2); // Obtener el año
+      const semester = new Date().getMonth() < 6 ? '1' : '2'; // Determinar el semestre
+      const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase(); // Primera letra del apellido paterno
+      // Convertir el consecutivo a cadena y asegurarse de que tenga 4 dígitos con ceros a la izquierda
+      const matriculaNumber = this.consecutivo.toString().padStart(4, '0'); // Asegurarse de que tenga 4 dígitos
+  
+      // Generar la matrícula combinando año, semestre, primera letra del apellido y el número
       this.alumno.matricula = `${year}${semester}${firstLetterOfSurname}${matriculaNumber}`;
     } else {
       // En caso de que no se obtenga el consecutivo
       console.error('No se pudo obtener el último consecutivo');
     }
   }
+  
 
   // Manejo de la foto
-  onPhotoSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result ?? null;
-        this.photoPreview = result;
-        this.alumno.photo = result;
-      };
-      reader.readAsDataURL(file);
+  updatePhotoUrl(url: string): void {
+    this.alumno.foto = url;
+  }
+  
+  onInputChange(event: any): void {
+    if (event.target && event.target.value) {
+      this.updatePhotoUrl(event.target.value);
     }
   }
 
@@ -174,6 +174,7 @@ export class EstudiantePageComponent implements OnInit {
 
   // Registrar alumno
   registrarAlumno(): void {
+    this.generateMatricula();
     // this.generateMatricula();
     console.log(this.alumno)
     this.alumnoService.registrarAlumno(this.alumno).subscribe(
