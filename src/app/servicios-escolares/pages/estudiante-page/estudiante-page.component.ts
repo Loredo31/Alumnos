@@ -61,11 +61,15 @@ export class EstudiantePageComponent implements OnInit {
   registroExitoso: boolean = false;
 
   ultimoConsecutivo: string | null = null;
-
-  constructor(private alumnoService: AlumnoService, private consecutivoService: ConsecutivoService) {}
+  
+  constructor(private alumnoService: AlumnoService, private consecutivoService: ConsecutivoService) {
+    console.log('Constructor del componente EstudiantePageComponent');
+    console.log(this.ultimoConsecutivo)
+  }
 
   ngOnInit(): void {
     this.obtenerConsecutivo(); // Obtener el último consecutivo al iniciar el componente
+    console.log(this.ultimoConsecutivo)
   }
 
   obtenerConsecutivo() {
@@ -175,7 +179,6 @@ export class EstudiantePageComponent implements OnInit {
   // Registrar alumno
   registrarAlumno(): void {
     this.generateMatricula();
-    // this.generateMatricula();
     console.log(this.alumno)
     this.alumnoService.registrarAlumno(this.alumno).subscribe(
       (response) => {

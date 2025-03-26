@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private alumnoService: AlumnoService) { }
 
   ngOnInit(): void {
-    // Obtener el ID del estudiante desde localStorage o cualquier otra fuente
+    // Obtener el ID del estudiante desde localStorage
     const alumnoId = localStorage.getItem('estudianteId');
 
     if (alumnoId) {
