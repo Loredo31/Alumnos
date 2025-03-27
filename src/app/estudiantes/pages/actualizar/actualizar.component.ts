@@ -11,7 +11,8 @@ export class ActualizarComponent implements OnInit {
     telefonos: [], 
     correos: [], 
     domicilio: {}, 
-    tutor: { domicilio: {}, telefonos: [], correos: [] }
+    tutor: { domicilio: {}, telefonos: [], correos: [] },
+    nuevaContrasena: '' // Agregamos el campo para la nueva contraseña
   };  // Inicializamos con valores predeterminados
 
   constructor(private alumnoService: AlumnoService) { }
@@ -30,7 +31,8 @@ export class ActualizarComponent implements OnInit {
             telefonos: Array.isArray(data.telefonos) ? data.telefonos : [],  
             correos: Array.isArray(data.correos) ? data.correos : [],  
             domicilio: data.domicilio || {},
-            tutor: data.tutores && data.tutores[0] || { domicilio: {}, telefonos: [], correos: [] }
+            tutor: data.tutores && data.tutores[0] || { domicilio: {}, telefonos: [], correos: [] },
+            nuevaContrasena: '' // Inicializamos el campo de contraseña
           };
         },
         (error: any) => {  // Especificamos el tipo de error
@@ -44,15 +46,24 @@ export class ActualizarComponent implements OnInit {
 
   // Función para actualizar la información del estudiante
   actualizar(): void {
-    const alumnoId = localStorage.getItem('estudianteId');  // Verifica si el alumnoId está presente
+    const alumnoId = localStorage.getItem('estudianteId'); // Verifica si el alumnoId está presente
     
     if (alumnoId) {
+      // Si el usuario ha ingresado una nueva contraseña, la enviamos al backend
+      const datosActualizados = { ...this.user };
+      if (this.user.nuevaContrasena) {
+        datosActualizados.contrasenia = this.user.nuevaContrasena; // Cambiar a 'contrasenia'
+      }
+      delete datosActualizados.nuevaContrasena;
+  
+      console.log('Datos enviados al backend:', datosActualizados); // Verificar qué se envía realmente
+      
       // Usamos el servicio para actualizar el alumno por su ID
-      this.alumnoService.actualizarAlumno(alumnoId, this.user).subscribe(
+      this.alumnoService.actualizarAlumno(alumnoId, datosActualizados).subscribe(
         () => {
           alert('Perfil actualizado correctamente');
         },
-        (error: any) => {  // Especificamos el tipo de error
+        (error: any) => {
           console.error('Error al actualizar el perfil', error);
         }
       );
@@ -60,6 +71,7 @@ export class ActualizarComponent implements OnInit {
       console.log('No se pudo obtener el ID del estudiante');
     }
   }
+  
 
   // Función para cancelar la edición
   cancelar(): void {

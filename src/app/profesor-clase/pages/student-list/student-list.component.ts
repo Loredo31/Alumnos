@@ -33,12 +33,16 @@ export class StudentListComponent implements OnInit {
   loadStudents() {
     this.alumnoService.obtenerAlumnos().subscribe(
       (data: any[]) => {
-        const students = data.map((student: any) => ({
-          name: `${student.nombre} ${student.apellido_paterno} ${student.apellido_materno}`,
-          career: student.carrera ? student.carrera.nombre : 'No definida',
-          id: student.matricula,
-          photo: student.foto || ''
-        }));
+        // Filtrar los estudiantes con rol 1
+        const students = data
+          .filter((student: any) => student.rol === 1)  // Solo rol 1
+          .map((student: any) => ({
+            name: `${student.nombre} ${student.apellido_paterno} ${student.apellido_materno}`,
+            career: student.carrera ? student.carrera.nombre : 'No definida',
+            id: student.matricula,
+            photo: student.foto || ''
+          }));
+
         this.dataSource.data = students;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

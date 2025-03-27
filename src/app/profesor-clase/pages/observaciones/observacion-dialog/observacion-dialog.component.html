@@ -1,13 +1,5 @@
 <mat-dialog-content class="dialog-content">
-  <mat-form-field appearance="outline">
-    <mat-label>Profesor</mat-label>
-    <mat-select [(ngModel)]="newObservation.teacherName">
-      <mat-option *ngFor="let teacher of teachers" [value]="teacher.name">
-        {{ teacher.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
+  <!-- Eliminamos la selección de profesor ya que se obtiene del token -->
 
   <mat-form-field appearance="outline">
     <mat-label>Estudiante</mat-label>

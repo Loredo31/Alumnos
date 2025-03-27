@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ObservacionDialogComponent } from './observacion-dialog/observacion-dialog.component';
 import { ObservacionService } from '../../../services/observacion.service';
-import { AlumnoService } from '../../../services/alumno.service'; // Importar el servicio de alumnos
+import { AlumnoService } from '../../../services/alumno.service';
+import { AuthService } from '../../../services/auth.service';  // Importamos el servicio de autenticación
 
 interface Observation {
   teacherId: string;
@@ -24,28 +25,34 @@ interface Observation {
 export class ObservacionesComponent implements OnInit {
   observations: Observation[] = [];
   filteredObservations: Observation[] = [];
-  teacherId: string = '2'; // ID del profesor
+  teacherId: string = ''; // Este ID será dinámico, basado en el login
   students: { id: string, name: string }[] = []; // Lista de estudiantes
-  teachers: { id: string, name: string }[] = [
-    { id: '1', name: 'Apolinar Trejo' },
-    { id: '2', name: 'Ricardo Muro' },
-    { id: '3', name: 'Gabriel Barron' },
-    { id: '4', name: 'Ricardo Ramirez' },
-    { id: '5', name: 'Silvia Carrillo' },
-    { id: '6', name: 'Hanoi Perez' }
-  ];
   semesters: number[] = [1, 2, 3, 4, 5, 6]; // Semestres (1-6)
   subjects: string[] = ['Programación', 'Redes', 'Calidad de Producción', 'Electromagnetismo', 'Química Aplicada', 'Base de Datos']; // Asignaturas
 
   constructor(
     private observacionService: ObservacionService,
-    private alumnoService: AlumnoService, // Inyectar el servicio de alumnos
+    private alumnoService: AlumnoService,
+    private authService: AuthService,  // Inyectamos el servicio de autenticación
     public dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    this.loadTeacherId();  // Obtener el ID del profesor desde el servicio de autenticación
     this.loadObservations();
     this.loadStudents(); // Cargar los estudiantes al inicio
+  }
+
+  loadTeacherId() {
+    const token = this.authService.getToken(); // Obtener el token
+    if (token) {
+      // Si tienes el token, puedes extraer la matrícula o ID del profesor desde él
+      // Suponiendo que el token contiene el `matricula` del profesor
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decodificar el token JWT
+      this.teacherId = decodedToken.matricula;  // Usamos el `matricula` del token como ID del profesor
+    } else {
+      console.error('No se encontró el token');
+    }
   }
 
   loadObservations() {
@@ -80,7 +87,6 @@ export class ObservacionesComponent implements OnInit {
     const dialogRef = this.dialog.open(ObservacionDialogComponent, {
       width: '600px',
       data: {
-        teachers: this.teachers,
         semesters: this.semesters,
         subjects: this.subjects,
         students: this.students // Pasar la lista de estudiantes al diálogo
@@ -95,15 +101,8 @@ export class ObservacionesComponent implements OnInit {
   }
 
   guardarObservacion(newObservation: Observation) {
-    // Buscar el teacherId a partir del teacherName seleccionado
-    const selectedTeacher = this.teachers.find(t => t.name === newObservation.teacherName);
-    if (selectedTeacher) {
-      newObservation.teacherId = selectedTeacher.id;  // Asignar el ID del profesor
-    } else {
-      console.error('Profesor no encontrado');
-      return; // Si no se encuentra el profesor, no guardar la observación
-    }
-  
+    newObservation.teacherId = this.teacherId;  // Asignamos el ID del profesor de la sesión
+
     // Ahora guardar la observación
     this.observacionService.agregarObservacion(newObservation).subscribe(
       (response) => {

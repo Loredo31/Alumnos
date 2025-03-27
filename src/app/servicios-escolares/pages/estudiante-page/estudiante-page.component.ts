@@ -69,7 +69,7 @@ export class EstudiantePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerConsecutivo(); // Obtener el último consecutivo al iniciar el componente
-    console.log(this.ultimoConsecutivo)
+    console.log(this)
   }
 
   obtenerConsecutivo() {
@@ -89,7 +89,8 @@ export class EstudiantePageComponent implements OnInit {
     if (this.consecutivo) {
       const year = new Date().getFullYear().toString().slice(-2); // Obtener el año
       const semester = new Date().getMonth() < 6 ? '1' : '2'; // Determinar el semestre
-      const firstLetterOfSurname = this.alumno.apellido_paterno.charAt(0).toUpperCase(); // Primera letra del apellido paterno
+      const firstLetterOfSurname = this.alumno.apellido_paterno ? this.alumno.apellido_paterno.charAt(0).toUpperCase() : 'X';
+// Primera letra del apellido paterno
       // Convertir el consecutivo a cadena y asegurarse de que tenga 4 dígitos con ceros a la izquierda
       const matriculaNumber = this.consecutivo.toString().padStart(4, '0'); // Asegurarse de que tenga 4 dígitos
   

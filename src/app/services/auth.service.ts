@@ -15,6 +15,7 @@ export class AuthService {
 
   login(matricula: string, password: string): Observable<any> {
     const body = { matricula, password };
+    console.log('Datos enviados al backend:', { matricula, password });
     return this.http.post(this.apiUrl, body);
   }
 

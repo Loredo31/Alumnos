@@ -2,7 +2,7 @@
 
 <mat-card class="observaciones-card">
   <mat-card-header>
-    <mat-card-title> Observaciones de Estudiantes</mat-card-title>
+    <mat-card-title>Observaciones de Estudiantes</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
@@ -13,8 +13,6 @@
         <table>
           <thead>
             <tr>
-              <th>Profesor Nombre</th>
-              <th>Profesor ID</th>
               <th>Materia</th>
               <th>Semestre</th>
               <th>Año</th>
@@ -25,8 +23,6 @@
           </thead>
           <tbody>
             <tr *ngFor="let observation of filteredObservations">
-              <td>{{ observation.teacherName }}</td>
-              <td>{{ observation.teacherId }}</td>
               <td>{{ observation.subject }}</td>
               <td>{{ observation.semester }}</td>
               <td>{{ observation.year }}</td>
