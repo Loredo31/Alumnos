@@ -30,5 +30,6 @@ export class ObservacionService {
   // Método para consultar observaciones filtradas
   consultarObservaciones(params: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/observaciones`, { params });
+    
   }
 }

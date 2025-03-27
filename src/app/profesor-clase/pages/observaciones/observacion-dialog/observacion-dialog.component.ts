@@ -1,11 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-// Definimos tipos claros para las propiedades teachers y students
-interface Teacher {
-  id: string;
-  name: string;
-}
+import { AuthService } from '../../../../services/auth.service'; // Importamos AuthService
 
 interface Student {
   id: string;
@@ -17,8 +12,7 @@ interface Student {
   templateUrl: './observacion-dialog.component.html',
   styleUrls: ['./observacion-dialog.component.css']
 })
-export class ObservacionDialogComponent {
-  // Inicializamos las propiedades con los tipos correspondientes
+export class ObservacionDialogComponent implements OnInit {
   newObservation = {
     studentName: '',
     subject: '',
@@ -29,21 +23,34 @@ export class ObservacionDialogComponent {
     teacherName: ''  // Nombre del profesor
   };
 
-  students: Student[] = [];  // Lista de estudiantes
-  subjects: string[] = [];   // Lista de asignaturas
-  semesters: number[] = [];  // Lista de semestres
-  teachers: Teacher[] = [];  // Lista de profesores
+  students: Student[] = [];
+  subjects: string[] = [];
+  semesters: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ObservacionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any // Recibimos los datos desde el componente principal
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private authService: AuthService  // Inyectamos el servicio de autenticación
   ) {
-    // Inicializamos las propiedades con los datos proporcionados
     if (data) {
       this.students = data.students || [];
       this.subjects = data.subjects || [];
       this.semesters = data.semesters || [];
-      this.teachers = data.teachers || []; // Asignamos la lista de profesores
+    }
+  }
+
+  ngOnInit() {
+    this.loadTeacherData();  // Cargar el ID y nombre del profesor
+  }
+
+  loadTeacherData() {
+    const token = this.authService.getToken();  // Obtener el token del AuthService
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decodificar el token JWT
+      this.newObservation.teacherId = decodedToken.matricula;  // Asignamos el ID del profesor
+      this.newObservation.teacherName = decodedToken.nombre;  // Asignamos el nombre del profesor (suponiendo que está en el token)
+    } else {
+      console.error('No se encontró el token');
     }
   }
 
@@ -52,7 +59,6 @@ export class ObservacionDialogComponent {
   }
 
   save(): void {
-    // Guardamos la observación con los datos actuales
-    this.dialogRef.close(this.newObservation); // Enviamos la nueva observación con los valores seleccionados
+    this.dialogRef.close(this.newObservation);  // Enviamos la nueva observación con los valores seleccionados
   }
 }

@@ -8,7 +8,7 @@
   background-image: url('https://i.pinimg.com/736x/f9/d5/df/f9d5df3917e17709e25d562bc5ff5759.jpg');
   background-size: cover;
   background-position: center;
-  z-index: -1;  /* Esto asegura que la imagen quede detrás del contenido */
+  z-index: -1;
 }
 
 /* Estilos generales */
@@ -25,96 +25,68 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Cambié el 'center' por 'flex-start' para alinearlo arriba */
   height: 100vh;
   text-align: center;
   color: #333;
+  padding-top: 40px; /* Agrega el margen superior para bajar la tarjeta */
 }
+
 
 .welcome-card {
   max-width: 600px;
   margin: 50px auto;
   padding: 30px;
-  background-color: #e0e0e0; /* Gris claro */
+  background-color: #e0e0e0;
   color: black;
-  box-shadow: 0px 8px 30px rgba(224, 213, 213, 0.902); /* Sombra más suave y difusa */
-  border-radius: 15px; /* Bordes redondeados */
+  box-shadow: 0px 8px 30px rgba(224, 213, 213, 0.9);
+  border-radius: 15px;
   position: relative;
   z-index: 1;
-  backdrop-filter: blur(10px); /* Desenfoque adicional para el fondo detrás de la tarjeta */
-  transition: all 0.3s ease; /* Añadir una transición para una animación suave */
-  font-family: 'Poppins', sans-serif; /* Aplicar la nueva tipografía */
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* Efecto hover en la tarjeta */
 .welcome-card:hover {
-  transform: translateY(-10px); /* Levantar la tarjeta al pasar el mouse */
-  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.6); /* Sombra más profunda */
+  transform: translateY(-10px);
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* Título de la tarjeta con nueva tipografía (Roboto Slab) */
+/* Título de la tarjeta */
 .mat-card-title {
-  font-size: 4.2rem; /* Título grande */
-  font-weight: 700; /* Más pesado para mayor impacto (negritas) */
-  text-transform: uppercase; /* Título en mayúsculas */
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 10px;
-  color: #333333 !important; /* Asegura que el título sea negro */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra más pronunciada */
-  font-family: 'Roboto Slab', serif; /* Usar la fuente Roboto Slab para el título */
+  color: #333 !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-family: 'Roboto Slab', serif;
 }
 
-/* Subtítulo dentro de la tarjeta con nueva tipografía (Lora) */
+/* Subtítulo de la tarjeta */
 .mat-card-subtitle {
-  font-size: 2.4rem; /* Aumentar tamaño de fuente para el subtítulo */
-  font-weight: 700; /* Hacer el subtítulo en negritas */
-  color: #f1f1f1 !important; /* Color blanco claro */
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f1f1 !important;
   line-height: 1.6;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Sombra más intensa */
-  letter-spacing: 1px; /* Espaciado de letras para mayor legibilidad */
-  font-family: 'Lora', serif; /* Usar la fuente Lora para el subtítulo */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+  font-family: 'Lora', serif;
 }
 
 /* Contenido de la tarjeta */
 .mat-card-content {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: black !important; /* Color del contenido más oscuro */
-  font-family: 'Poppins', sans-serif; /* Aplicar la fuente */
-  margin-top: 10px;
-  font-weight: 400; /* Normal para los párrafos */
-}
-
-/* Ajustes para los párrafos */
-.welcome-card p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.8;
   color: black !important;
-  font-family: 'Poppins', sans-serif; /* Aplicar la fuente */
+  font-family: 'Poppins', sans-serif;
   margin-top: 10px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra sutil en los párrafos */
+  font-weight: 400;
 }
 
-/* Estilo de los botones (si hay botones dentro de la tarjeta) */
-.mat-card button {
-  background-color: #3498db; /* Azul brillante para los botones */
-  color: white;
-  padding: 12px 24px;
-  border-radius: 25px;
-  border: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra en el texto de los botones */
-}
-
-/* Efecto hover para los botones */
-.mat-card button:hover {
-  background-color: #2980b9; /* Cambia a un azul más oscuro */
-}
-
-/* Sección de información */
+/* Estilo para la sección de información */
 .info-section {
   display: flex;
   gap: 20px;
@@ -131,15 +103,15 @@ body {
   transition: transform 0.3s ease-in-out;
 }
 
+/* Efecto hover en las tarjetas de información */
 .info-card:hover {
   transform: translateY(-5px);
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-
 .info-card mat-icon {
   font-size: 50px;
   margin-bottom: 10px;
-  padding: 30px; /* Agregar un poco de espacio alrededor del icono */
+  padding: 30px;
   color: #343434;
 }
