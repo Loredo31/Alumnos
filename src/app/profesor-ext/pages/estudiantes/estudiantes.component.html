@@ -23,14 +23,18 @@
   
     <!-- Lista de estudiantes -->
     <div *ngIf="filteredStudents.length > 0" class="student-list">
-        <div *ngFor="let student of filteredStudents" class="student-item">
-          <div class="student-info">
-            <img src="https://storage.needpix.com/rsynced_images/user-icon-2098873_1280.png" alt="User Icon" class="user-icon" />
-            <div class="student-details">
-              <h3>{{ student.nombre }} {{ student.apellido_paterno }} {{ student.apellido_materno }}</h3>
-              <p><strong>Matrícula:</strong> {{ student.matricula }}</p>
-              <p><strong>Carrera:</strong> {{ student.carrera?.nombre || 'Sin asignar' }}</p>
-            </div>
+      <div *ngFor="let student of filteredStudents" class="student-item">
+        <div class="student-info">
+          <!-- Usar la URL de la foto proporcionada en el objeto estudiante -->
+          <img *ngIf="student.foto" [src]="student.foto" alt="Foto del estudiante" class="user-icon" />
+          <img *ngIf="!student.foto" src="https://storage.needpix.com/rsynced_images/user-icon-2098873_1280.png" alt="User Icon" class="user-icon" />
+          <div class="student-details">
+            <h3>{{ student.nombre }} {{ student.apellido_paterno }} {{ student.apellido_materno }}</h3>
+            <p><strong>Matrícula:</strong> {{ student.matricula }}</p>
+            <p><strong>Carrera:</strong> {{ student.carrera?.nombre || 'Sin asignar' }}</p>
+          </div>
+        
+        
             <!-- Botón para agregar actividad, alineado a la derecha -->
             <div class="add-activity-btn">
               <button class="btn btn-success" (click)="abrirModalAgregarActividad(student)">

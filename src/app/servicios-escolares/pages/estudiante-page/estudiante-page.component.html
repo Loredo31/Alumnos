@@ -18,9 +18,8 @@
     </div>
 
     <!-- Foto -->
-    <div class="form-group photo-input-container">
-      
-     
+    <div class="form-row">
+
       <label for="fotoUrl">URL de la Foto</label>
       <input type="text" id="fotoUrl" (input)="onInputChange($event)"  placeholder="Ingresa la URL de la foto" />
     </div>
@@ -98,7 +97,7 @@
         <input [(ngModel)]="alumno.telefonos[i]" [name]="'telefonos' + i" class="form-control">
         <button *ngIf="alumno.telefonos.length > 1" type="button" (click)="removePhone(i)" class="remove-btn">Eliminar</button>
       </div>
-      <button type="button" (click)="addPhone()" class="add-btn" [disabled]="alumno.telefonos.length >= 3">Agregar Teléfono</button>
+      <button type="button" (click)="addPhone()" class="add-btn" [disabled]="alumno.telefonos.length >= 15">Agregar Teléfono</button>
     </div>
 
     <div class="form-group">
@@ -108,7 +107,7 @@
         <input [(ngModel)]="alumno.correos[i]" [name]="'correos' + i" class="form-control">
         <button *ngIf="alumno.correos.length > 1" type="button" (click)="removeEmail(i)" class="remove-btn">Eliminar</button>
       </div>
-      <button type="button" (click)="addEmail()" class="add-btn" [disabled]="alumno.correos.length >= 3">Agregar Correo</button>
+      <button type="button" (click)="addEmail()" class="add-btn" [disabled]="alumno.correos.length >= 15">Agregar Correo</button>
     </div>
   </div>
 
@@ -175,7 +174,7 @@
           <input [(ngModel)]="alumno.tutores[0].telefonos[i]" name="tutorPhones{{i}}" class="form-control">
           <button *ngIf="alumno.tutores[0].telefonos.length > 1" type="button" (click)="removeTutorPhone(i)" class="remove-btn">Eliminar</button>
         </div>
-        <button type="button" (click)="addTutorPhone()" class="add-btn" [disabled]="alumno.tutores[0].telefonos.length >= 3">Agregar Teléfono</button>
+        <button type="button" (click)="addTutorPhone()" class="add-btn" [disabled]="alumno.tutores[0].telefonos.length >= 15">Agregar Teléfono</button>
       </div>
 
       <div class="form-group">
@@ -184,7 +183,7 @@
           <input [(ngModel)]="alumno.tutores[0].correos[i]" name="tutorEmails{{i}}" class="form-control">
           <button *ngIf="alumno.tutores[0].correos.length > 1" type="button" (click)="removeTutorEmail(i)" class="remove-btn">Eliminar</button>
         </div>
-        <button type="button" (click)="addTutorEmail()" class="add-btn" [disabled]="alumno.tutores[0].correos.length >= 3">Agregar Correo</button>
+        <button type="button" (click)="addTutorEmail()" class="add-btn" [disabled]="alumno.tutores[0].correos.length >= 15">Agregar Correo</button>
       </div>
     </div>
 
