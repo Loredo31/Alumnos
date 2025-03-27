@@ -100,6 +100,7 @@ console.log('Datos enviados al backend:', {
     ).subscribe(
       (response) => {
         console.log('Actividad actualizada con éxito:', response);
+        alert("Actividad registrada con éxito!!!")
         this.cerrarModal();
       },
       (error) => {

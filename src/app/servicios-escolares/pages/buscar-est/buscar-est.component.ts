@@ -47,6 +47,7 @@ export class BuscarEstComponent implements OnInit{
     );
   }
 
+  
   // Función de búsqueda
   onSearch(): void {
     if (this.searchTerm.trim() === '') {
