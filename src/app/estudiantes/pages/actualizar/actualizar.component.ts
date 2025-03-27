@@ -18,7 +18,7 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener el ID del estudiante desde el localStorage
-    const alumnoId = localStorage.getItem('_id');  // Verifica si esta clave existe en localStorage
+    const alumnoId = localStorage.getItem('estudianteId');  // Verifica si esta clave existe en localStorage
 
     if (alumnoId) {
       // Usamos el servicio para obtener los datos del alumno por su ID

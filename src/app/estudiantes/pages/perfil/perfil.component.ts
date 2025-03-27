@@ -11,24 +11,18 @@ export class PerfilComponent implements OnInit {
     telefonos: [], 
     correos: [], 
     domicilio: {}, 
-    tutor: { domicilio: {},
-            telefonos: [],   // Aseguramos que telefonos del tutor sean un array
-            correos: [] }
+    tutor: { domicilio: {}, telefonos: [], correos: [] }
   };  // Inicializamos con valores predeterminados
 
   constructor(private alumnoService: AlumnoService) { }
 
   ngOnInit(): void {
-    // Solo establecer un ID si no está presente en el localStorage (para pruebas)
-    if (!localStorage.getItem('')) {
-      localStorage.setItem('', '');  // Este es un ID de prueba
-    }
-
-    const alumnoId = localStorage.getItem('_id');  // Obtener el ID del estudiante desde el localStorage
+    // Obtener el ID del estudiante desde localStorage
+    const alumnoId = localStorage.getItem('estudianteId');  // Cambié a 'estudianteId'
 
     if (alumnoId) {
       // Usamos el servicio para obtener los datos del alumno por su ID
-      this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(  // Cambié a obtenerAlumnoPorId
+      this.alumnoService.obtenerAlumnoPorId(alumnoId).subscribe(
         (data: any) => {  // Especificamos el tipo de data
           // Aseguramos que telefonos y correos sean siempre arrays
           this.user = { 
